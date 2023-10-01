@@ -3,14 +3,24 @@
 
 #include "Character/AuraEnemy.h"
 
+#include "Aura/Aura.h"
+
 void AAuraEnemy::HighlightActor()
 {
-	GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Yellow, FString::Printf(TEXT("Highlighted %s"), *GetName()));
-	DrawDebugBox(GetWorld(), GetActorLocation(), FVector(50, 50, 50), FColor::Yellow, false, 2);
+	GetMesh()->SetRenderCustomDepth(true);
+	Weapon->SetRenderCustomDepth(true);
 	
 }
 
 void AAuraEnemy::UnHighlightActor()
 {
-	GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Orange, FString::Printf(TEXT("UnHighlighted %s"), *GetName()));
+	GetMesh()->SetRenderCustomDepth(false);
+	Weapon->SetRenderCustomDepth(false);
+}
+
+void AAuraEnemy::BeginPlay()
+{
+	Super::BeginPlay();
+	GetMesh()->SetCustomDepthStencilValue(CUSTOM_DEPTH_RED);
+	Weapon->SetCustomDepthStencilValue(CUSTOM_DEPTH_RED);
 }
