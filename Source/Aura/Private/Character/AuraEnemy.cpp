@@ -34,4 +34,6 @@ void AAuraEnemy::BeginPlay()
 	Super::BeginPlay();
 	GetMesh()->SetCustomDepthStencilValue(CUSTOM_DEPTH_RED);
 	Weapon->SetCustomDepthStencilValue(CUSTOM_DEPTH_RED);
+
+	AbilitySystemComponent->InitAbilityActorInfo(this, this);
 }
