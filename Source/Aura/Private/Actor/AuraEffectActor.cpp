@@ -39,6 +39,14 @@ void AAuraEffectActor::ApplyEffectToTarget(AActor* TargetActor, TSubclassOf<UGam
 	}
 }
 
+void AAuraEffectActor::ApplyEffectsListToTarget(AActor* TargetActor)
+{
+	for (TSubclassOf<UGameplayEffect> effect : EffectsToApply)
+	{
+		ApplyEffectToTarget(TargetActor, effect);
+	}
+}
+
 void AAuraEffectActor::OnOverlap(AActor* TargetActor)
 {
 	if (InstantEffectApplicationPolicy == EEffectApplicationPolicy::ApplyOnOverlap)

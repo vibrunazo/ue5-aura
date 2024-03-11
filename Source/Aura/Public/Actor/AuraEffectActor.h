@@ -39,8 +39,21 @@ protected:
 	UFUNCTION(BlueprintCallable)
 	void ApplyEffectToTarget(AActor* TargetActor, TSubclassOf<UGameplayEffect> GameplayEffectClass);
 
+	/**
+	 * Applies all the effects from the @EffectsToApply array to Target Actor.
+	 * @param TargetActor The Actor who will have the Effects applied to
+	 */
+	UFUNCTION(BlueprintCallable)
+	void ApplyEffectsListToTarget(AActor* TargetActor);
+
 	UFUNCTION(BlueprintCallable)
 	void OnOverlap(AActor* TargetActor);
+	
+	/**
+	 * Removes all the *INFINITE* effects this Actor applied to the given @TargetActor.
+	 * @param TargetActor The Actor who will have its Effects removed from. Usually the Actor that just left the area.
+	 */
+	UFUNCTION(BlueprintCallable)
 	void RemoveActiveEffects(AActor* TargetActor);
 
 	UFUNCTION(BlueprintCallable)
@@ -48,6 +61,10 @@ protected:
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Applied Effects")
 	bool bDestroyOnEffectRemoval = false;
+
+	
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Applied Effects")
+	TArray<TSubclassOf<UGameplayEffect>> EffectsToApply;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Applied Effects")
 	TSubclassOf<UGameplayEffect> InstantGameplayEffectClass;
