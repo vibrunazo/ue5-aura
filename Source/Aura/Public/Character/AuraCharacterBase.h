@@ -31,4 +31,11 @@ protected:
 
 	UPROPERTY()
 	TObjectPtr<UAttributeSet> AttributeSet;
+
+	/**
+	 * Initializes the ability system for a character in a game by calling InitAbilityActorInfo on the
+	 * AbilitySystemComponent. Letting the Ability System know who owns it and what Character it controls.
+	 * Initializes the HUD Overlay.
+	 */
+	virtual void InitAbilityActorInfo();
 };

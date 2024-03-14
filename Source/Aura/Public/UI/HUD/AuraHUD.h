@@ -24,6 +24,11 @@ public:
 	
 	UOverlayWidgetController* GetOverlayWidgetController(const FWidgetControllerParams& WCParams);
 
+	
+	/**
+	 * Initializes the overlay for the HUD by creating a user widget, setting its controller, broadcasting initial values,
+	 * and adding it to the viewport.
+	 */
 	void InitOverlay(APlayerController* PC, APlayerState* PS, UAbilitySystemComponent* ASC, UAttributeSet* AS);
 	
 
