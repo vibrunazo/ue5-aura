@@ -6,6 +6,12 @@
 #include "UI/Widget/AuraUserWidget.h"
 #include "UI/WidgetController/OverlayWidgetController.h"
 
+/**
+ * Returns overlay widget controller. If it does not exist, it will be created using widget controller params.
+ *
+ * @param WCParams Struct containing widget controller params
+ * @return The overlay widget controller
+ */
 UOverlayWidgetController* AAuraHUD::GetOverlayWidgetController(const FWidgetControllerParams& WCParams)
 {
 	if (OverlayWidgetController == nullptr)
