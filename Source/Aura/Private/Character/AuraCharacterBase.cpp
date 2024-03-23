@@ -3,6 +3,7 @@
 
 #include "Character/AuraCharacterBase.h"
 #include "AbilitySystemComponent.h"
+#include "AbilitySystem/AuraAbilitySystemComponent.h"
 
 AAuraCharacterBase::AAuraCharacterBase()
 {
@@ -47,5 +48,21 @@ void AAuraCharacterBase::InitializeDefaultAttributes() const
 	ApplyEffectToSelf(DefaultSecondaryAttributes, 1.0f);
 	ApplyEffectToSelf(DefaultVitalAttributes, 1.0f);
 	
+}
+
+void AAuraCharacterBase::AddCharacterAbilities()
+{
+	if (!HasAuthority()) return;
+
+	UAuraAbilitySystemComponent* AuraASC = Cast<UAuraAbilitySystemComponent>(AbilitySystemComponent);
+
+	if (!AuraASC)
+	{
+		// this can happen if we place another Aura on the map
+		UE_LOG(LogTemp, Warning, TEXT("AAuraCharacterBase::AddCharacterAbilities - AbilitySystemComponent is invalid in %s"), *GetName());
+		return;
+	}
+
+	AuraASC->AddCharacterAbilities(StartupAbilities);
 }
 
