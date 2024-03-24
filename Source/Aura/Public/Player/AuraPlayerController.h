@@ -31,6 +31,8 @@ protected:
 	void AutoRun();
 	virtual void PlayerTick(float DeltaTime) override;
 	virtual void SetupInputComponent() override;
+	
+	FHitResult CursorHit;
 
 private:
 	UPROPERTY(EditAnywhere, category = "Input")

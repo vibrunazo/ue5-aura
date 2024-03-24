@@ -53,11 +53,11 @@ void AAuraPlayerController::PlayerTick(float DeltaTime)
 void AAuraPlayerController::AutoRun()
 {
 	if (!bIsAutoRunning) return;
-	if (APawn* ControlledPawn = GetPawn())
+	if (IsValid(GetPawn()))
 	{
-		const FVector LocationOnSpline = Spline->FindLocationClosestToWorldLocation(ControlledPawn->GetActorLocation(), ESplineCoordinateSpace::World);
+		const FVector LocationOnSpline = Spline->FindLocationClosestToWorldLocation(GetPawn()->GetActorLocation(), ESplineCoordinateSpace::World);
 		const FVector Direction = Spline->FindDirectionClosestToWorldLocation(LocationOnSpline, ESplineCoordinateSpace::World);
-		ControlledPawn->AddMovementInput(Direction);
+		GetPawn()->AddMovementInput(Direction);
 		const float DistanceToDestination = (LocationOnSpline - CachedDestination).Length();
 		if (DistanceToDestination <= AutoRunAcceptanceRadius)
 		{
@@ -90,13 +90,11 @@ void AAuraPlayerController::Move(const FInputActionValue& InputActionValue)
 	{
 		ControlledPawn->AddMovementInput(FVector::ForwardVector, InputAxisVector.Y);
 		ControlledPawn->AddMovementInput(FVector::RightVector, InputAxisVector.X);
-		
 	}
 }
 
 void AAuraPlayerController::CursorTrace()
 {
-	FHitResult CursorHit;
 	GetHitResultUnderCursor(ECC_Visibility, false, CursorHit);
 	if (!CursorHit.bBlockingHit) return;
 
@@ -105,14 +103,8 @@ void AAuraPlayerController::CursorTrace()
 
 	if (ThisActor != LastActor)
 	{
-		if (LastActor)
-		{
-			LastActor->UnHighlightActor();
-		}
-		if (ThisActor)
-		{
-			ThisActor->HighlightActor();
-		}
+		if (LastActor) LastActor->UnHighlightActor();
+		if (ThisActor) ThisActor->HighlightActor();
 	}
 }
 
@@ -127,10 +119,8 @@ void AAuraPlayerController::AbilityInputTagPressed(FGameplayTag InputTag)
 
 void AAuraPlayerController::AbilityInputTagReleased(FGameplayTag InputTag)
 {
-	
 	if (!InputTag.MatchesTagExact(FAuraGameplayTags::Get().InputTag_LMB))
 	{
-		
 		GetASC()->AbilityInputReleased(InputTag);
 		return;
 	}
@@ -151,7 +141,6 @@ void AAuraPlayerController::AbilityInputTagReleased(FGameplayTag InputTag)
 				for (const FVector& PointLoc : NavPath->PathPoints)
 				{
 					Spline->AddSplinePoint(PointLoc, ESplineCoordinateSpace::World);
-					DrawDebugSphere(GetWorld(), PointLoc, 8.f, 8, FColor::Purple, false, 5.f);
 				}
 				// So in the case where we would run off into the distance 
 				// is actually a case where we had no path points in the array.  
@@ -172,28 +161,18 @@ void AAuraPlayerController::AbilityInputTagHeld(FGameplayTag InputTag)
 {
 	if (!InputTag.MatchesTagExact(FAuraGameplayTags::Get().InputTag_LMB))
 	{
-		if (GetASC())
-		{
-			GetASC()->AbilityInputHeld(InputTag);
-		}
+		if (GetASC()) GetASC()->AbilityInputHeld(InputTag);
 		return;
 	}
 	if (bTargeting)
 	{
-		if (GetASC())
-		{
-			GetASC()->AbilityInputHeld(InputTag);
-		}
+		if (GetASC()) GetASC()->AbilityInputHeld(InputTag);
 	}
 	else
 	{
 		FollowTime += GetWorld()->DeltaTimeSeconds;
 
-		FHitResult Hit;
-		if (GetHitResultUnderCursor(ECC_Visibility, false, Hit))
-		{
-			CachedDestination = Hit.ImpactPoint;
-		}
+		if (CursorHit.bBlockingHit) CachedDestination = CursorHit.ImpactPoint;
 
 		if (APawn* ControlledPawn = GetPawn())
 		{
