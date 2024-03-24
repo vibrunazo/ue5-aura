@@ -27,6 +27,9 @@ public:
 
 	void AddCharacterAbilities(const TArray<TSubclassOf<UAuraGameplayAbility>>& StartupAbilities);
 
+	void AbilityInputHeld(const FGameplayTag& InputTag);
+	void AbilityInputReleased(const FGameplayTag& InputTag);
+
 protected:
 	void EffectApplied(UAbilitySystemComponent* AbilitySystemComponent, const FGameplayEffectSpec& EffectSpec, FActiveGameplayEffectHandle ActiveEffectHandle);
 
