@@ -90,6 +90,7 @@ void AAuraPlayerController::Move(const FInputActionValue& InputActionValue)
 	{
 		ControlledPawn->AddMovementInput(FVector::ForwardVector, InputAxisVector.Y);
 		ControlledPawn->AddMovementInput(FVector::RightVector, InputAxisVector.X);
+		bIsAutoRunning = false;
 	}
 }
 
