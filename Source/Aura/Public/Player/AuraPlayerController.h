@@ -25,6 +25,7 @@ class AURA_API AAuraPlayerController : public APlayerController
 
 public:
 	AAuraPlayerController();
+	FHitResult CursorHit;
 
 protected:
 	virtual void BeginPlay() override;
@@ -32,7 +33,6 @@ protected:
 	virtual void PlayerTick(float DeltaTime) override;
 	virtual void SetupInputComponent() override;
 	
-	FHitResult CursorHit;
 
 private:
 	UPROPERTY(EditAnywhere, category = "Input")
