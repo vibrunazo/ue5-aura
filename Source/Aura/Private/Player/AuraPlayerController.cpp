@@ -72,6 +72,8 @@ void AAuraPlayerController::SetupInputComponent()
 
 	UAuraInputComponent* AuraInputComponent = CastChecked<UAuraInputComponent>(InputComponent);
 	AuraInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &AAuraPlayerController::Move);
+	AuraInputComponent->BindAction(ShiftAction, ETriggerEvent::Started, this, &AAuraPlayerController::OnShiftPressed);
+	AuraInputComponent->BindAction(ShiftAction, ETriggerEvent::Completed, this, &AAuraPlayerController::OnShiftReleased);
 	
 	AuraInputComponent->BindAbilityActions(InputConfig, this,
 		&ThisClass::AbilityInputTagPressed, &ThisClass::AbilityInputTagReleased, &ThisClass::AbilityInputTagHeld);
@@ -120,19 +122,18 @@ void AAuraPlayerController::AbilityInputTagPressed(FGameplayTag InputTag)
 
 void AAuraPlayerController::AbilityInputTagReleased(FGameplayTag InputTag)
 {
+	// If not LMB, then just cast the corresponding Ability
 	if (!InputTag.MatchesTagExact(FAuraGameplayTags::Get().InputTag_LMB))
 	{
-		GetASC()->AbilityInputReleased(InputTag);
+		if (GetASC()) GetASC()->AbilityInputReleased(InputTag);
 		return;
 	}
-	if (bTargeting)
+	// If it is LMB then Cast the LMB Ability
+	if (GetASC()) GetASC()->AbilityInputReleased(InputTag);
+	// Then check for short press and stop moving
+	if (!bTargeting && !bShiftPressed)
 	{
-		if (GetASC() == nullptr) return;
-		GetASC()->AbilityInputHeld(InputTag);
-	}
-	else
-	{
-		APawn* ControlledPawn = GetPawn();
+		const APawn* ControlledPawn = GetPawn();
 		if (FollowTime <= ShortPressThreshold && ControlledPawn)
 		{
 			if (UNavigationPath* NavPath = UNavigationSystemV1::FindPathToLocationSynchronously(this,
@@ -160,12 +161,14 @@ void AAuraPlayerController::AbilityInputTagReleased(FGameplayTag InputTag)
 
 void AAuraPlayerController::AbilityInputTagHeld(FGameplayTag InputTag)
 {
+	// If it's not LMB, it's a regular ability button, so cast that ability
 	if (!InputTag.MatchesTagExact(FAuraGameplayTags::Get().InputTag_LMB))
 	{
 		if (GetASC()) GetASC()->AbilityInputHeld(InputTag);
 		return;
 	}
-	if (bTargeting)
+	// If it is LMB, then either Move or cast the LMB ability
+	if (bTargeting || bShiftPressed)
 	{
 		if (GetASC()) GetASC()->AbilityInputHeld(InputTag);
 	}

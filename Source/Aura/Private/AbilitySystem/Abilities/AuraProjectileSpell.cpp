@@ -6,7 +6,7 @@
 #include "Actor/AuraProjectile.h"
 #include "Interaction/CombatInterface.h"
 
-void UAuraProjectileSpell::CastProjectile()
+void UAuraProjectileSpell::CastProjectile(const FVector& TargetLocation)
 {
 	if (!GetAvatarActorFromActorInfo() || !GetWorld()) return;
 	if (!ProjectileClass) return;
@@ -16,9 +16,13 @@ void UAuraProjectileSpell::CastProjectile()
 	if (CombatInterface)
 	{
 		const FVector SocketLocation = CombatInterface->GetCombatSocketLocation();
+		FRotator Rotation = (TargetLocation - GetAvatarActorFromActorInfo()->GetActorLocation()).Rotation();
+		Rotation.Pitch = 0.f;
 		FTransform SpawnTransform;
 		SpawnTransform.SetLocation(SocketLocation);
-		// TODO: Set the projectile's rotation
+		// Set the projectile's rotation
+		SpawnTransform.SetRotation(Rotation.Quaternion());
+		
 		AAuraProjectile* Projectile = GetWorld()->SpawnActorDeferred<AAuraProjectile>(
 			ProjectileClass,
 			SpawnTransform,
