@@ -12,11 +12,19 @@ void UAuraProjectileSpell::CastProjectile(const FVector& TargetLocation)
 	if (!ProjectileClass) return;
 	const bool bIsServer = GetAvatarActorFromActorInfo()->HasAuthority();
 	if (!bIsServer) return;
-	ICombatInterface* CombatInterface = Cast<ICombatInterface>(GetAvatarActorFromActorInfo());
-	if (CombatInterface)
+	if (ICombatInterface* CombatInterface = Cast<ICombatInterface>(GetAvatarActorFromActorInfo()))
 	{
 		const FVector SocketLocation = CombatInterface->GetCombatSocketLocation();
-		FRotator Rotation = (TargetLocation - GetAvatarActorFromActorInfo()->GetActorLocation()).Rotation();
+		FVector UpdatedTarget = FVector(TargetLocation.X, TargetLocation.Y, GetAvatarActorFromActorInfo()->GetActorLocation().Z);
+		const float Distance = (UpdatedTarget - GetAvatarActorFromActorInfo()->GetActorLocation()).Length();
+		// If the target is too close to the caster, then target a little bit further behind the target to avoid casting backwards.
+		// Casting backwards would happen if the target is between the SocketLocation and the caster Location
+		if (Distance <= 200.f)
+		{
+			UpdatedTarget += (UpdatedTarget - GetAvatarActorFromActorInfo()->GetActorLocation()).GetSafeNormal() * 120.f;
+		}
+		FRotator Rotation = (UpdatedTarget - SocketLocation).Rotation();
+		
 		Rotation.Pitch = 0.f;
 		FTransform SpawnTransform;
 		SpawnTransform.SetLocation(SocketLocation);
