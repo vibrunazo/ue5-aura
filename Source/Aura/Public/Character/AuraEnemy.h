@@ -7,6 +7,8 @@
 #include "Interaction/EnemyInterface.h"
 #include "AuraEnemy.generated.h"
 
+class UOverlayWidgetController;
+class UWidgetComponent;
 /**
  * 
  */
@@ -26,9 +28,16 @@ public:
 	virtual int32 GetPlayerLevel() override;
 	/** End of Combat Interface */
 	
+	UPROPERTY(EditDefaultsOnly)
+	TObjectPtr<UWidgetComponent> HealthBarWidget;
+
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<UOverlayWidgetController> OverlayWidgetControllerClass;
+	
 private:
 	virtual void BeginPlay() override;
 	virtual void InitAbilityActorInfo() override;
+
 
 protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Character Class Defaults")
