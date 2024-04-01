@@ -41,6 +41,7 @@ void UAuraAttributeSet::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& Ou
 	
 }
 
+// Changes the current value of the attribute, works for all effects with duration, infinite or instant
 void UAuraAttributeSet::PreAttributeChange(const FGameplayAttribute& Attribute, float& NewValue)
 {
 	Super::PreAttributeChange(Attribute, NewValue);
@@ -53,13 +54,13 @@ void UAuraAttributeSet::PreAttributeChange(const FGameplayAttribute& Attribute, 
 	{
 		SetMana(FMath::Clamp(GetMana(), 0.f, NewValue));
 	}
-
 }
 
+// Changes the base value of the attribute, So it only works with Instant GameplayEffects
 void UAuraAttributeSet::PreAttributeBaseChange(const FGameplayAttribute& Attribute, float& NewValue) const
 {
 	Super::PreAttributeBaseChange(Attribute, NewValue);
-
+	
 	if (Attribute == GetHealthAttribute())
 	{
 		NewValue = FMath::Clamp(NewValue, 0.f, GetMaxHealth());
@@ -103,6 +104,8 @@ void UAuraAttributeSet::SetEffectProperties(const FGameplayEffectModCallbackData
 	}
 }
 
+// only triggers after changes to the BaseValue of an Attribute from an instant GameplayEffect.
+// This is a valid place to do more Attribute manipulation when they change from a GameplayEffect.
 void UAuraAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallbackData& Data)
 {
 	Super::PostGameplayEffectExecute(Data);
@@ -110,9 +113,22 @@ void UAuraAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallba
 	FEffectProperties Props;
 	SetEffectProperties(Data, Props);
 
-	if (Data.EvaluatedData.Attribute == GetHealthAttribute())
+	if (Data.EvaluatedData.Attribute == GetIncomingDamageAttribute())
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Health Changed on %s to %f"), *Props.TargetAvatarActor->GetName(), GetHealth());
+		const float LocalIncomingDamage = GetIncomingDamage();
+		SetIncomingDamage(0.f);
+		UE_LOG(LogTemp, Warning, TEXT("Incoming Damage Changed on %s to %f"), *Props.TargetAvatarActor->GetName(), LocalIncomingDamage);
+		if (LocalIncomingDamage > 0.f)
+		{
+			const float NewHealth = GetHealth() - LocalIncomingDamage;
+			SetHealth(FMath::Clamp(NewHealth, 0.f, GetMaxHealth()));
+
+			const bool bFatalDamage = NewHealth <= 0.f;
+			if (bFatalDamage)
+			{
+				UE_LOG(LogTemp, Warning, TEXT("Fatal! Health Changed on %s to %f"), *Props.TargetAvatarActor->GetName(), GetHealth());
+			}
+		}
 	}
 
 }
