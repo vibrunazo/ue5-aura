@@ -26,6 +26,10 @@ public:
 	UPROPERTY(BlueprintReadWrite, meta = (ExposeOnSpawn = true))
 	FGameplayEffectSpecHandle DamageEffectSpecHandle;
 
+	/* Whether or not to hit the caster of this projectile */
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, meta = (ExposeOnSpawn = true), Category = "Projectile")
+	bool bHitSelf = false;
+
 	
 protected:
 	virtual void BeginPlay() override;
