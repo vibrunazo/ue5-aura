@@ -68,13 +68,14 @@ void AAuraEnemy::InitAbilityActorInfo()
 	AbilitySystemComponent->InitAbilityActorInfo(this, this);
 	Cast<UAuraAbilitySystemComponent>(AbilitySystemComponent)->AbilityActorInfoSet();
 	InitializeDefaultAttributes();
+	UAuraAbilitySystemLibrary::GiveStartupAbilities(this, AbilitySystemComponent);
 
+	// Sets up Health bar widget and controller
 	const FWidgetControllerParams WCParams(nullptr, nullptr, AbilitySystemComponent, AttributeSet);
 	UOverlayWidgetController* const OverlayWidgetController = NewObject<UOverlayWidgetController>(
 		this, OverlayWidgetControllerClass);
 	OverlayWidgetController->SetWidgetControllerParams(WCParams);
 	OverlayWidgetController->BindCallbacksToDependencies();
-
 	if (UAuraUserWidget* AuraWidget = Cast<UAuraUserWidget>(HealthBarWidget->GetWidget()))
 		AuraWidget->SetWidgetController(OverlayWidgetController);
 }

@@ -48,7 +48,6 @@ void UAuraAbilitySystemLibrary::InitializeDefaultAttributes(const UObject* World
 {
 	const AAuraGameModeBase* AuraGameMode = Cast<AAuraGameModeBase>(UGameplayStatics::GetGameMode(WorldContextObject));
 	if (AuraGameMode == nullptr) return;
-
 	
 	// Gets the Asset that contains the GameplayEffect class that sets the initial Primary Attributes for all Character Classes
 	UCharacterClassInfo* CharacterClassInfo = AuraGameMode->CharacterClassInfo;
@@ -61,4 +60,16 @@ void UAuraAbilitySystemLibrary::InitializeDefaultAttributes(const UObject* World
 	ApplyEffectFromClass(PrimaryAttributesEffectClass, ASC, Level);
 	ApplyEffectFromClass(SecondaryAttributesEffectClass, ASC, Level);
 	ApplyEffectFromClass(VitalAttributesEffectClass, ASC, Level);
+}
+
+void UAuraAbilitySystemLibrary::GiveStartupAbilities(const UObject* WorldContextObject, UAbilitySystemComponent* ASC)
+{
+	const AAuraGameModeBase* AuraGameMode = Cast<AAuraGameModeBase>(UGameplayStatics::GetGameMode(WorldContextObject));
+	if (AuraGameMode == nullptr) return;
+	// Gets the Asset that contains the initial Abilities that all enemies should have
+	UCharacterClassInfo* CharacterClassInfo = AuraGameMode->CharacterClassInfo;
+	for (const TSubclassOf<UGameplayAbility> ClassAbility : CharacterClassInfo->CommonAbilities)
+	{
+		ASC->GiveAbility(FGameplayAbilitySpec(ClassAbility, 1));
+	}
 }
