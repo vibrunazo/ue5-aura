@@ -7,6 +7,11 @@
 
 FAuraGameplayTags FAuraGameplayTags::GameplayTags;
 
+namespace AuraTags
+{
+	UE_DEFINE_GAMEPLAY_TAG_COMMENT(Test_TestTag, "Test.TestTag", "Test Tag Comment");
+}
+
 void FAuraGameplayTags::InitializeNativeGameplayTags()
 {
 	GameplayTags.Attributes_Primary_Strength = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Attributes.Primary.Strength"), TEXT("How Stronk yu are"));
@@ -34,6 +39,10 @@ void FAuraGameplayTags::InitializeNativeGameplayTags()
 	GameplayTags.InputTag_4 = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("InputTag.4"), FString(""));
 	
 	GameplayTags.Damage = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Damage"), FString(""));
+
+	GameplayTags.Effects_HitReact = UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Effects.HitReact"), FString(""));
+
+	
 	
 
 }

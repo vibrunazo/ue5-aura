@@ -48,6 +48,7 @@ void UAuraProjectileSpell::CastProjectile(const FVector& TargetLocation)
 		const FAuraGameplayTags TagsList = FAuraGameplayTags::Get();
 		const float ScaledDamage = Damage.GetValueAtLevel(GetAbilityLevel());
 		UAbilitySystemBlueprintLibrary::AssignTagSetByCallerMagnitude(SpecHandle, TagsList.Damage, ScaledDamage);
+		FGameplayTag MyTag = AuraTags::Test_TestTag;
 
 		Projectile->DamageEffectSpecHandle = SpecHandle;
 		

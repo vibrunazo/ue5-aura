@@ -4,7 +4,13 @@
 
 #include "CoreMinimal.h"
 #include "GameplayTagContainer.h"
+#include "NativeGameplayTags.h"
 
+namespace AuraTags
+{
+	UE_DECLARE_GAMEPLAY_TAG_EXTERN(Test_TestTag)
+	
+}
 /**
  * AuraGameplayTags
  *
@@ -40,6 +46,8 @@ struct FAuraGameplayTags
 	FGameplayTag InputTag_4;
 	
 	FGameplayTag Damage;
+	
+	FGameplayTag Effects_HitReact;
 
 private:
 	static FAuraGameplayTags GameplayTags; 
