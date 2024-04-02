@@ -7,6 +7,7 @@
 #include "AuraGameplayTags.h"
 #include "GameplayEffectExtension.h"
 #include "GameFramework/Character.h"
+#include "Interaction/CombatInterface.h"
 #include "Net/UnrealNetwork.h"
 
 UAuraAttributeSet::UAuraAttributeSet()
@@ -127,6 +128,10 @@ void UAuraAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallba
 			const bool bFatalDamage = NewHealth <= 0.f;
 			if (bFatalDamage)
 			{
+				if (ICombatInterface* CombatInterface = Cast<ICombatInterface>(Props.TargetAvatarActor))
+				{
+					CombatInterface->Die();
+				}
 				UE_LOG(LogTemp, Warning, TEXT("Fatal! Health Changed on %s to %f"), *Props.TargetAvatarActor->GetName(), GetHealth());
 			}
 			else

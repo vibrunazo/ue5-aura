@@ -25,7 +25,14 @@ public:
 	UAttributeSet* GetAttributeSet() const { return  AttributeSet; }
 
 	/** Combat Interface */
-	UAnimMontage* GetHitReactMontage_Implementation() override;
+	virtual UAnimMontage* GetHitReactMontage_Implementation() override;
+	// only on server
+	virtual void Die() override;
+	/** End Combat Interface */
+
+	// on both server and clients
+	UFUNCTION(NetMulticast, Reliable)
+	virtual void MulticastHandleDeath();
 protected:
 	virtual void BeginPlay() override;
 
