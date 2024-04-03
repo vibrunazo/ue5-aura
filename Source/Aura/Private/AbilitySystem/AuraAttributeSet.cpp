@@ -60,7 +60,7 @@ void UAuraAttributeSet::PreAttributeChange(const FGameplayAttribute& Attribute, 
 	}
 }
 
-// Changes the base value of the attribute, So it only works with Instant GameplayEffects
+// Changes the base value of the attribute, So it only works with Instant (or periodic) GameplayEffects
 void UAuraAttributeSet::PreAttributeBaseChange(const FGameplayAttribute& Attribute, float& NewValue) const
 {
 	Super::PreAttributeBaseChange(Attribute, NewValue);
