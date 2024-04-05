@@ -48,5 +48,15 @@ public:
 	
 	UFUNCTION(BlueprintCallable, Category = "AuraAbilitySystemLibrary|CharacterClassDefaults", meta = (WorldContext="WorldContextObject"))
 	static void GiveStartupAbilities(const UObject* WorldContextObject, UAbilitySystemComponent* ASC);
+
+	/**
+	 * Returns the CharacterClassDefaultInfo Asset, stored in the GameMode. And stores common classes related to each
+	 * Character Class. Can only be called on the server since the GameMode only exists on the server. Will return a
+	 * nullptr if called on a client.
+	 * @param WorldContextObject Any in-game Object. Required to get the GameMode
+	 * @return The CharacterClassDefaultInfo Asset
+	 */
+	UFUNCTION(BlueprintCallable, Category = "AuraAbilitySystemLibrary|CharacterClassDefaults", meta = (WorldContext="WorldContextObject"))
+	static UCharacterClassInfo* GetCharacterClassInfo(const UObject* WorldContextObject);
 	
 };

@@ -31,7 +31,7 @@ protected:
 	UPROPERTY()
 	TObjectPtr<UAttributeSet> AttributeSet;
 
-	UPROPERTY(VisibleAnywhere, ReplicatedUsing=OnRep_PlayerLevel)
+	UPROPERTY(EditAnywhere, ReplicatedUsing=OnRep_PlayerLevel)
 	int32 PlayerLevel = 1;
 
 	UFUNCTION()
