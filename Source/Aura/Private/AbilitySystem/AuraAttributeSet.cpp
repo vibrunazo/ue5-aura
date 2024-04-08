@@ -74,7 +74,11 @@ void UAuraAttributeSet::PreAttributeBaseChange(const FGameplayAttribute& Attribu
 		NewValue = FMath::Clamp(NewValue, 0.f, GetMaxMana());
 	}
 }
-
+/**
+ * Populates an FEffectProperties object with the relevant data from a given FGameplayEffectModCallbackData.
+ * @param Data - The data received from a gameplay effect modification.
+ * @param Props - A reference to an FEffectProperties object that will be filled with extracted information.	
+ */
 void UAuraAttributeSet::SetEffectProperties(const FGameplayEffectModCallbackData& Data, FEffectProperties& Props)
 {
 	// Source: Causer of the Effect, Target: target of the Effect (Owner of this AttributeSet)

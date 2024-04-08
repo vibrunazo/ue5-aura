@@ -42,9 +42,14 @@ void UAuraProjectileSpell::CastProjectile(const FVector& TargetLocation)
 			ESpawnActorCollisionHandlingMethod::AlwaysSpawn);
 		const UAbilitySystemComponent* SourceASC = UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(
 			GetAvatarActorFromActorInfo());
-		// TODO: maybe add source actor to Effect Context?
+		FGameplayEffectContextHandle ContextHandle = SourceASC->MakeEffectContext();
+		ContextHandle.SetAbility(this);
+		ContextHandle.AddSourceObject(Projectile);
+		FHitResult HitResult;
+		HitResult.Location = TargetLocation;
+		ContextHandle.AddHitResult(HitResult);
 		const FGameplayEffectSpecHandle SpecHandle = SourceASC->MakeOutgoingSpec(
-			DamageEffectClass, GetAbilityLevel(), SourceASC->MakeEffectContext());
+			DamageEffectClass, GetAbilityLevel(), ContextHandle);
 		const FAuraGameplayTags TagsList = FAuraGameplayTags::Get();
 		const float ScaledDamage = Damage.GetValueAtLevel(GetAbilityLevel());
 		UAbilitySystemBlueprintLibrary::AssignTagSetByCallerMagnitude(SpecHandle, TagsList.Damage, ScaledDamage);
