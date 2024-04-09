@@ -4,6 +4,7 @@
 #include "AbilitySystem/ExecCalc/ExecCalc_Damage.h"
 
 #include "AbilitySystemComponent.h"
+#include "AuraAbilityTypes.h"
 #include "AuraGameplayTags.h"
 #include "AbilitySystem/AuraAbilitySystemLibrary.h"
 #include "AbilitySystem/AuraAttributeSet.h"
@@ -86,13 +87,13 @@ void UExecCalc_Damage::Execute_Implementation(const FGameplayEffectCustomExecuti
 	ExecutionParams.AttemptCalculateCapturedAttributeMagnitude(GetDamageStatics().CriticalHitResistanceDef, EvaluationParameters, TargetCriticalHitResistance);
 	TargetCriticalHitResistance = FMath::Clamp(TargetCriticalHitResistance, 0.f, 100.f);
 	
-	float SourceCritChance = 0.f;
-	ExecutionParams.AttemptCalculateCapturedAttributeMagnitude(GetDamageStatics().CriticalHitChanceDef, EvaluationParameters, SourceCritChance);
-	SourceCritChance = FMath::Clamp((SourceCritChance - TargetCriticalHitResistance) * CriticalChanceLevelCoefficient, 0.f, 100.f);
+	float SourceCriticalChance = 0.f;
+	ExecutionParams.AttemptCalculateCapturedAttributeMagnitude(GetDamageStatics().CriticalHitChanceDef, EvaluationParameters, SourceCriticalChance);
+	SourceCriticalChance = FMath::Clamp((SourceCriticalChance - TargetCriticalHitResistance) * CriticalChanceLevelCoefficient, 0.f, 100.f);
 
-	float SourceCritDamage = 0.f;
-	ExecutionParams.AttemptCalculateCapturedAttributeMagnitude(GetDamageStatics().CriticalHitDamageDef, EvaluationParameters, SourceCritDamage);
-	SourceCritDamage = FMath::Clamp(SourceCritDamage, 0.f, 400.f);
+	float SourceCriticalDamage = 0.f;
+	ExecutionParams.AttemptCalculateCapturedAttributeMagnitude(GetDamageStatics().CriticalHitDamageDef, EvaluationParameters, SourceCriticalDamage);
+	SourceCriticalDamage = FMath::Clamp(SourceCriticalDamage, 0.f, 400.f);
 
 	float TargetArmor = 0.f;
 	ExecutionParams.AttemptCalculateCapturedAttributeMagnitude(GetDamageStatics().ArmorDef, EvaluationParameters, TargetArmor);
@@ -112,9 +113,14 @@ void UExecCalc_Damage::Execute_Implementation(const FGameplayEffectCustomExecuti
 	if (bBlocked) Damage *= 0.5f;
 
 	// Roll for crit chance
-	const bool bCrit = !bBlocked && (HitRoll <= BlockChance + SourceCritChance);
-	if (bCrit) Damage *= 1.f + SourceCritDamage / 100.f;
+	const bool bCrit = !bBlocked && (HitRoll <= BlockChance + SourceCriticalChance);
+	if (bCrit) Damage *= 1.f + SourceCriticalDamage / 100.f;
 
+	FGameplayEffectContextHandle EffectContextHandle = Spec.GetContext();
+	UAuraAbilitySystemLibrary::SetIsBlockedHit(EffectContextHandle, bBlocked);
+	UAuraAbilitySystemLibrary::SetIsCriticalHit(EffectContextHandle, bCrit);
+	
+	
 	const FGameplayModifierEvaluatedData EvaluatedData(UAuraAttributeSet::GetIncomingDamageAttribute(), EGameplayModOp::Additive, Damage);
 	OutExecutionOutput.AddOutputModifier(EvaluatedData);
 	
