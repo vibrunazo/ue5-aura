@@ -29,7 +29,7 @@ public:
 	FHitResult CursorHit;
 
 	UFUNCTION(Client, Reliable)
-	void ShowDamageNumber(float DamageAmount, ACharacter* TargetCharacter);
+	void ShowDamageNumber(float DamageAmount, ACharacter* TargetCharacter, bool bBlockedHit = false, bool bCriticalHit = false);
 
 protected:
 	virtual void BeginPlay() override;
