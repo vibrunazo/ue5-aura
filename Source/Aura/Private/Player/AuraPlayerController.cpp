@@ -128,7 +128,7 @@ void AAuraPlayerController::CursorTrace()
 
 void AAuraPlayerController::AbilityInputTagPressed(FGameplayTag InputTag)
 {
-	if (InputTag.MatchesTagExact(FAuraGameplayTags::Get().InputTag_LMB))
+	if (InputTag.MatchesTagExact(AuraTags::InputTag_LMB))
 	{
 		bTargeting = ThisActor ? true : false;
 		bIsAutoRunning = false;
@@ -138,7 +138,7 @@ void AAuraPlayerController::AbilityInputTagPressed(FGameplayTag InputTag)
 void AAuraPlayerController::AbilityInputTagReleased(FGameplayTag InputTag)
 {
 	// If not LMB, then just cast the corresponding Ability
-	if (!InputTag.MatchesTagExact(FAuraGameplayTags::Get().InputTag_LMB))
+	if (!InputTag.MatchesTagExact(AuraTags::InputTag_LMB))
 	{
 		if (GetASC()) GetASC()->AbilityInputReleased(InputTag);
 		return;
@@ -177,7 +177,7 @@ void AAuraPlayerController::AbilityInputTagReleased(FGameplayTag InputTag)
 void AAuraPlayerController::AbilityInputTagHeld(FGameplayTag InputTag)
 {
 	// If it's not LMB, it's a regular ability button, so cast that ability
-	if (!InputTag.MatchesTagExact(FAuraGameplayTags::Get().InputTag_LMB))
+	if (!InputTag.MatchesTagExact(AuraTags::InputTag_LMB))
 	{
 		if (GetASC()) GetASC()->AbilityInputHeld(InputTag);
 		return;

@@ -50,10 +50,13 @@ void UAuraProjectileSpell::CastProjectile(const FVector& TargetLocation)
 		ContextHandle.AddHitResult(HitResult);
 		const FGameplayEffectSpecHandle SpecHandle = SourceASC->MakeOutgoingSpec(
 			DamageEffectClass, GetAbilityLevel(), ContextHandle);
-		const FAuraGameplayTags TagsList = FAuraGameplayTags::Get();
-		const float ScaledDamage = Damage.GetValueAtLevel(GetAbilityLevel());
-		UAbilitySystemBlueprintLibrary::AssignTagSetByCallerMagnitude(SpecHandle, TagsList.Damage, ScaledDamage);
-		FGameplayTag MyTag = AuraTags::Test_TestTag;
+
+		for (TTuple<FGameplayTag, FScalableFloat> Pair : DamageTypes)
+		{
+			const FGameplayTag& Tag = Pair.Key;
+			const float ScaledDamage = Pair.Value.GetValueAtLevel(GetAbilityLevel());
+			UAbilitySystemBlueprintLibrary::AssignTagSetByCallerMagnitude(SpecHandle, Tag, ScaledDamage);
+		}
 
 		Projectile->DamageEffectSpecHandle = SpecHandle;
 		

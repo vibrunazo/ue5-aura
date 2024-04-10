@@ -10,6 +10,35 @@ namespace AuraTags
 {
 	UE_DECLARE_GAMEPLAY_TAG_EXTERN(Test_TestTag)
 	
+	UE_DECLARE_GAMEPLAY_TAG_EXTERN(Attributes_Primary_Strength)
+	UE_DECLARE_GAMEPLAY_TAG_EXTERN(Attributes_Primary_Agility)
+	UE_DECLARE_GAMEPLAY_TAG_EXTERN(Attributes_Primary_Intelligence)
+	UE_DECLARE_GAMEPLAY_TAG_EXTERN(Attributes_Primary_Resilience)
+	UE_DECLARE_GAMEPLAY_TAG_EXTERN(Attributes_Primary_Vigor)
+
+	UE_DECLARE_GAMEPLAY_TAG_EXTERN(Attributes_Secondary_Armor)
+	UE_DECLARE_GAMEPLAY_TAG_EXTERN(Attributes_Secondary_ArmorPenetration)
+	UE_DECLARE_GAMEPLAY_TAG_EXTERN(Attributes_Secondary_BlockChance)
+	UE_DECLARE_GAMEPLAY_TAG_EXTERN(Attributes_Secondary_CriticalHitChance)
+	UE_DECLARE_GAMEPLAY_TAG_EXTERN(Attributes_Secondary_CriticalHitDamage)
+	UE_DECLARE_GAMEPLAY_TAG_EXTERN(Attributes_Secondary_CriticalHitResistance)
+	UE_DECLARE_GAMEPLAY_TAG_EXTERN(Attributes_Secondary_HealthRegeneration)
+	UE_DECLARE_GAMEPLAY_TAG_EXTERN(Attributes_Secondary_ManaRegeneration)
+	UE_DECLARE_GAMEPLAY_TAG_EXTERN(Attributes_Secondary_MaxHealth)
+	UE_DECLARE_GAMEPLAY_TAG_EXTERN(Attributes_Secondary_MaxMana)
+
+	UE_DECLARE_GAMEPLAY_TAG_EXTERN(InputTag_LMB)
+	UE_DECLARE_GAMEPLAY_TAG_EXTERN(InputTag_RMB)
+	UE_DECLARE_GAMEPLAY_TAG_EXTERN(InputTag_1)
+	UE_DECLARE_GAMEPLAY_TAG_EXTERN(InputTag_2)
+	UE_DECLARE_GAMEPLAY_TAG_EXTERN(InputTag_3)
+	UE_DECLARE_GAMEPLAY_TAG_EXTERN(InputTag_4)
+
+	UE_DECLARE_GAMEPLAY_TAG_EXTERN(Damage)
+	UE_DECLARE_GAMEPLAY_TAG_EXTERN(Damage_Fire)
+	
+	UE_DECLARE_GAMEPLAY_TAG_EXTERN(Effects_HitReact)
+	
 }
 /**
  * AuraGameplayTags
@@ -20,34 +49,6 @@ struct FAuraGameplayTags
 {
 	static FAuraGameplayTags& Get()	{ return GameplayTags; }
 	static void InitializeNativeGameplayTags();
-
-	FGameplayTag Attributes_Primary_Strength;
-	FGameplayTag Attributes_Primary_Agility;
-	FGameplayTag Attributes_Primary_Intelligence;
-	FGameplayTag Attributes_Primary_Resilience;
-	FGameplayTag Attributes_Primary_Vigor;
-	
-	FGameplayTag Attributes_Secondary_Armor;
-	FGameplayTag Attributes_Secondary_ArmorPenetration;
-	FGameplayTag Attributes_Secondary_BlockChance;
-	FGameplayTag Attributes_Secondary_CriticalHitChance;
-	FGameplayTag Attributes_Secondary_CriticalHitDamage;
-	FGameplayTag Attributes_Secondary_CriticalHitResistance;
-	FGameplayTag Attributes_Secondary_HealthRegeneration;
-	FGameplayTag Attributes_Secondary_ManaRegeneration;
-	FGameplayTag Attributes_Secondary_MaxHealth;
-	FGameplayTag Attributes_Secondary_MaxMana;
-
-	FGameplayTag InputTag_LMB;
-	FGameplayTag InputTag_RMB;
-	FGameplayTag InputTag_1;
-	FGameplayTag InputTag_2;
-	FGameplayTag InputTag_3;
-	FGameplayTag InputTag_4;
-	
-	FGameplayTag Damage;
-	
-	FGameplayTag Effects_HitReact;
 
 private:
 	static FAuraGameplayTags GameplayTags; 
