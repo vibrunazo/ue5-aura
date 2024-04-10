@@ -126,6 +126,26 @@ public:
 	FGameplayAttributeData MaxMana;
 	ATTRIBUTE_ACCESSORS(UAuraAttributeSet, MaxMana)
 	
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_ResistanceArcane, Category = "Resistance Attributes")
+	FGameplayAttributeData ResistanceArcane;
+	ATTRIBUTE_ACCESSORS(UAuraAttributeSet, ResistanceArcane)
+
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_ResistanceFire, Category = "Resistance Attributes")
+	FGameplayAttributeData ResistanceFire;
+	ATTRIBUTE_ACCESSORS(UAuraAttributeSet, ResistanceFire)
+	
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_ResistanceFrost, Category = "Resistance Attributes")
+	FGameplayAttributeData ResistanceFrost;
+	ATTRIBUTE_ACCESSORS(UAuraAttributeSet, ResistanceFrost)
+	
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_ResistanceLightning, Category = "Resistance Attributes")
+	FGameplayAttributeData ResistanceLightning;
+	ATTRIBUTE_ACCESSORS(UAuraAttributeSet, ResistanceLightning)
+	
+	UPROPERTY(BlueprintReadOnly, ReplicatedUsing = OnRep_ResistancePhysical, Category = "Resistance Attributes")
+	FGameplayAttributeData ResistancePhysical;
+	ATTRIBUTE_ACCESSORS(UAuraAttributeSet, ResistancePhysical)
+	
 	/*
 	 * Vital Attributes
 	 */
@@ -198,6 +218,21 @@ public:
 	UFUNCTION()
 	void OnRep_MaxMana(const FGameplayAttributeData& OldMaxMana) const;
 
+	UFUNCTION()
+	void OnRep_ResistanceArcane(const FGameplayAttributeData& OldResistanceArcane) const;
+
+	UFUNCTION()
+	void OnRep_ResistanceFire(const FGameplayAttributeData& OldResistanceFire) const;
+	
+	UFUNCTION()
+	void OnRep_ResistanceFrost(const FGameplayAttributeData& OldResistanceFrost) const;
+	
+	UFUNCTION()
+	void OnRep_ResistanceLightning(const FGameplayAttributeData& OldResistanceLightning) const;
+	
+	UFUNCTION()
+	void OnRep_ResistancePhysical(const FGameplayAttributeData& OldResistancePhysical) const;
+	
 private:
 	void SetEffectProperties(const FGameplayEffectModCallbackData& Data, FEffectProperties& Props);
 	void ShowFloatingText(const FEffectProperties& Props, float LocalIncomingDamage, bool bBlockedHit, bool bCriticalHit);
