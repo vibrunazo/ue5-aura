@@ -28,6 +28,12 @@ namespace AuraTags
 	UE_DEFINE_GAMEPLAY_TAG_COMMENT(Attributes_Secondary_MaxHealth, "Attributes.Secondary.MaxHealth", "Max health");
 	UE_DEFINE_GAMEPLAY_TAG_COMMENT(Attributes_Secondary_MaxMana, "Attributes.Secondary.MaxMana", "Max mana");
 
+	UE_DEFINE_GAMEPLAY_TAG_COMMENT(Attributes_Resistance_Arcane, "Attributes.Resistance.Arcane", "Resistance to Arcane Damage");
+	UE_DEFINE_GAMEPLAY_TAG_COMMENT(Attributes_Resistance_Fire, "Attributes.Resistance.Fire", "Resistance to Fire Damage");
+	UE_DEFINE_GAMEPLAY_TAG_COMMENT(Attributes_Resistance_Frost, "Attributes.Resistance.Frost", "Resistance to Frost Damage");
+	UE_DEFINE_GAMEPLAY_TAG_COMMENT(Attributes_Resistance_Lightning, "Attributes.Resistance.Lightning", "Resistance to Lightning Damage");
+	UE_DEFINE_GAMEPLAY_TAG_COMMENT(Attributes_Resistance_Physical, "Attributes.Resistance.Physical", "Resistance to Physical Damage");
+
 	UE_DEFINE_GAMEPLAY_TAG_COMMENT(InputTag_LMB, "InputTag.LMB", "Left Mouse Button");
 	UE_DEFINE_GAMEPLAY_TAG_COMMENT(InputTag_RMB, "InputTag.RMB", "Right Mouse Button");
 	UE_DEFINE_GAMEPLAY_TAG_COMMENT(InputTag_1, "InputTag.1", "Action 1");
@@ -36,7 +42,11 @@ namespace AuraTags
 	UE_DEFINE_GAMEPLAY_TAG_COMMENT(InputTag_4, "InputTag.4", "Action 4");
 
 	UE_DEFINE_GAMEPLAY_TAG_COMMENT(Damage, "Damage", "Damage");
+	UE_DEFINE_GAMEPLAY_TAG_COMMENT(Damage_Arcane, "Damage.Arcane", "Arcane Damage type");
 	UE_DEFINE_GAMEPLAY_TAG_COMMENT(Damage_Fire, "Damage.Fire", "Fire Damage type");
+	UE_DEFINE_GAMEPLAY_TAG_COMMENT(Damage_Frost, "Damage.Frost", "Frost Damage type");
+	UE_DEFINE_GAMEPLAY_TAG_COMMENT(Damage_Lightning, "Damage.Lightning", "Lightning Damage type");
+	UE_DEFINE_GAMEPLAY_TAG_COMMENT(Damage_Physical, "Damage.Physical", "Physical Damage type");
 	
 	UE_DEFINE_GAMEPLAY_TAG_COMMENT(Effects_HitReact, "Effects.HitReact", "Character is playing hit react animation");
 	
@@ -44,5 +54,9 @@ namespace AuraTags
 
 void FAuraGameplayTags::InitializeNativeGameplayTags()
 {
-
+	GameplayTags.DamageTypesToResistances.Add(AuraTags::Damage_Arcane, AuraTags::Attributes_Resistance_Arcane);
+	GameplayTags.DamageTypesToResistances.Add(AuraTags::Damage_Fire, AuraTags::Attributes_Resistance_Fire);
+	GameplayTags.DamageTypesToResistances.Add(AuraTags::Damage_Frost, AuraTags::Attributes_Resistance_Frost);
+	GameplayTags.DamageTypesToResistances.Add(AuraTags::Damage_Lightning, AuraTags::Attributes_Resistance_Lightning);
+	GameplayTags.DamageTypesToResistances.Add(AuraTags::Damage_Physical, AuraTags::Attributes_Resistance_Physical);
 }

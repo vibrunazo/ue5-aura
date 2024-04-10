@@ -103,11 +103,11 @@ void UExecCalc_Damage::Execute_Implementation(const FGameplayEffectCustomExecuti
 	// float Damage = Spec.GetSetByCallerMagnitude(AuraTags::Damage);
 	float Damage = 0.f;
 	// TODO: Use Tags in the Effect itself to determine type of damage instead of looping through all existing types.
-	FGameplayTagContainer AllDamageTags = UGameplayTagsManager::Get().RequestGameplayTagChildren(AuraTags::Damage);
-	for(const auto& Tag : AllDamageTags)
+	// FGameplayTagContainer AllDamageTags = UGameplayTagsManager::Get().RequestGameplayTagChildren(AuraTags::Damage);
+	for(const TTuple<FGameplayTag, FGameplayTag>& Pair : FAuraGameplayTags::Get().DamageTypesToResistances)
 	{
 		//Get damage set by caller magnitude
-		Damage += Spec.GetSetByCallerMagnitude(Tag);
+		Damage += Spec.GetSetByCallerMagnitude(Pair.Key);
 	}
 
 	Damage -= TargetArmor;

@@ -27,6 +27,12 @@ namespace AuraTags
 	UE_DECLARE_GAMEPLAY_TAG_EXTERN(Attributes_Secondary_MaxHealth)
 	UE_DECLARE_GAMEPLAY_TAG_EXTERN(Attributes_Secondary_MaxMana)
 
+	UE_DECLARE_GAMEPLAY_TAG_EXTERN(Attributes_Resistance_Arcane)
+	UE_DECLARE_GAMEPLAY_TAG_EXTERN(Attributes_Resistance_Fire)
+	UE_DECLARE_GAMEPLAY_TAG_EXTERN(Attributes_Resistance_Frost)
+	UE_DECLARE_GAMEPLAY_TAG_EXTERN(Attributes_Resistance_Lightning)
+	UE_DECLARE_GAMEPLAY_TAG_EXTERN(Attributes_Resistance_Physical)
+
 	UE_DECLARE_GAMEPLAY_TAG_EXTERN(InputTag_LMB)
 	UE_DECLARE_GAMEPLAY_TAG_EXTERN(InputTag_RMB)
 	UE_DECLARE_GAMEPLAY_TAG_EXTERN(InputTag_1)
@@ -35,10 +41,14 @@ namespace AuraTags
 	UE_DECLARE_GAMEPLAY_TAG_EXTERN(InputTag_4)
 
 	UE_DECLARE_GAMEPLAY_TAG_EXTERN(Damage)
+	UE_DECLARE_GAMEPLAY_TAG_EXTERN(Damage_Arcane)
 	UE_DECLARE_GAMEPLAY_TAG_EXTERN(Damage_Fire)
+	UE_DECLARE_GAMEPLAY_TAG_EXTERN(Damage_Frost)
+	UE_DECLARE_GAMEPLAY_TAG_EXTERN(Damage_Lightning)
+	UE_DECLARE_GAMEPLAY_TAG_EXTERN(Damage_Physical)
 	
 	UE_DECLARE_GAMEPLAY_TAG_EXTERN(Effects_HitReact)
-	
+
 }
 /**
  * AuraGameplayTags
@@ -50,6 +60,13 @@ struct FAuraGameplayTags
 	static FAuraGameplayTags& Get()	{ return GameplayTags; }
 	static void InitializeNativeGameplayTags();
 
+	/**
+	 * Key: DamageType
+	 * Value: Resisted DamageType
+	 * Example: <Damage_Fire, Attributes_Resistance_Fire>
+	 */
+	TMap<FGameplayTag, FGameplayTag> DamageTypesToResistances;
+
 private:
-	static FAuraGameplayTags GameplayTags; 
+	static FAuraGameplayTags GameplayTags;
 };
