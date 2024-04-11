@@ -41,7 +41,7 @@ void AAuraEffectActor::ApplyEffectToTarget(AActor* TargetActor, TSubclassOf<UGam
 
 void AAuraEffectActor::ApplyEffectsListToTarget(AActor* TargetActor)
 {
-	for (TSubclassOf<UGameplayEffect> effect : EffectsToApply)
+	for (const TSubclassOf<UGameplayEffect> effect : EffectsToApply)
 	{
 		ApplyEffectToTarget(TargetActor, effect);
 	}
@@ -101,7 +101,6 @@ void AAuraEffectActor::OnEndOverlap(AActor* TargetActor)
 	if (InfiniteEffectRemovalPolicy == EEffectRemovalPolicy::RemoveOnEndOverlap)
 	{
 		RemoveActiveEffects(TargetActor);
-		
 	}
 }
 
