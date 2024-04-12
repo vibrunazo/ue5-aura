@@ -30,6 +30,4 @@ void UBTService_FindNearestPlayer::TickNode(UBehaviorTreeComponent& OwnerComp, u
 	}
 	UBTFunctionLibrary::SetBlackboardValueAsObject(this, TargetToFollowSelector, BestActor);
 	UBTFunctionLibrary::SetBlackboardValueAsFloat(this, DistanceToTargetSelector, BestDistance);
-
-	GEngine->AddOnScreenDebugMessage(-1, 6.0f, FColor::Yellow, FString::Printf(TEXT("Following: %s"), *BestActor->GetName()));
 }
