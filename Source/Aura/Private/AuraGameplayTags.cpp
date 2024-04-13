@@ -47,6 +47,8 @@ namespace AuraTags
 	UE_DEFINE_GAMEPLAY_TAG_COMMENT(Damage_Frost, "Damage.Frost", "Frost Damage type");
 	UE_DEFINE_GAMEPLAY_TAG_COMMENT(Damage_Lightning, "Damage.Lightning", "Lightning Damage type");
 	UE_DEFINE_GAMEPLAY_TAG_COMMENT(Damage_Physical, "Damage.Physical", "Physical Damage type");
+
+	UE_DEFINE_GAMEPLAY_TAG_COMMENT(Abilities_Attack, "Abilities.Attack", "An attack ability");
 	
 	UE_DEFINE_GAMEPLAY_TAG_COMMENT(Effects_HitReact, "Effects.HitReact", "Character is playing hit react animation");
 	

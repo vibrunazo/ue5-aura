@@ -24,6 +24,8 @@ public:
 	AAuraEnemy();
 	virtual void PossessedBy(AController* NewController) override;
 
+	ECharacterClass GetCharacterClass() const;
+
 	/** Enemy Interface */
 	virtual void HighlightActor() override;
 	virtual void UnHighlightActor() override;

@@ -46,6 +46,11 @@ void AAuraEnemy::PossessedBy(AController* NewController)
 	
 }
 
+ECharacterClass AAuraEnemy::GetCharacterClass() const
+{
+	return CharacterClass;
+}
+
 void AAuraEnemy::HighlightActor()
 {
 	GetMesh()->SetRenderCustomDepth(true);
@@ -98,7 +103,7 @@ void AAuraEnemy::InitAbilityActorInfo()
 	Cast<UAuraAbilitySystemComponent>(AbilitySystemComponent)->AbilityActorInfoSet();
 	if (HasAuthority())
 	{
-		UAuraAbilitySystemLibrary::GiveStartupAbilities(this, AbilitySystemComponent);
+		UAuraAbilitySystemLibrary::GiveStartupAbilities(this, AbilitySystemComponent, CharacterClass);
 		InitializeDefaultAttributes();
 	}
 

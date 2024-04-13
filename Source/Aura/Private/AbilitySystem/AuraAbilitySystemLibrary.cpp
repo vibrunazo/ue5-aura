@@ -4,6 +4,8 @@
 #include "AbilitySystem/AuraAbilitySystemLibrary.h"
 
 #include "AuraAbilityTypes.h"
+#include "Character/AuraCharacterBase.h"
+#include "Character/AuraEnemy.h"
 #include "Game/AuraGameModeBase.h"
 #include "Kismet/GameplayStatics.h"
 #include "Player/AuraPlayerState.h"
@@ -60,13 +62,21 @@ void UAuraAbilitySystemLibrary::InitializeDefaultAttributes(const UObject* World
 	ApplyEffectFromClass(VitalAttributesEffectClass, ASC, Level);
 }
 
-void UAuraAbilitySystemLibrary::GiveStartupAbilities(const UObject* WorldContextObject, UAbilitySystemComponent* ASC)
+void UAuraAbilitySystemLibrary::GiveStartupAbilities(const UObject* WorldContextObject, UAbilitySystemComponent* ASC, ECharacterClass CharacterClass)
 {
 	// Gets the Asset that contains the initial Abilities that all enemies should have
 	UCharacterClassInfo* CharacterClassInfo = GetCharacterClassInfo(WorldContextObject);
+	if (!CharacterClassInfo) return;
 	for (const TSubclassOf<UGameplayAbility> ClassAbility : CharacterClassInfo->CommonAbilities)
 	{
 		ASC->GiveAbility(FGameplayAbilitySpec(ClassAbility, 1));
+	}
+	FCharacterClassDefaultInfo ClassStruct = CharacterClassInfo->GetCharacterClassDefaultInfo(CharacterClass);
+	for (const TSubclassOf<UGameplayAbility> ClassAbility : ClassStruct.ClassAbilities)
+	{
+		ICombatInterface* CombatInterface = Cast<ICombatInterface>(ASC->GetAvatarActor());
+		if (!CombatInterface) continue;
+		ASC->GiveAbility(FGameplayAbilitySpec(ClassAbility, CombatInterface->GetPlayerLevel()));
 	}
 }
 
