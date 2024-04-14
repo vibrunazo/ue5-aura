@@ -167,7 +167,14 @@ void UAuraAttributeSet::ShowFloatingText(const FEffectProperties& Props, const f
 {
 	if (Props.SourceCharacter != Props.TargetCharacter)
 	{
+		// Player doing damage to someone
 		if (AAuraPlayerController* PC = Cast<AAuraPlayerController>(Props.SourceCharacter->Controller))
+		{
+			PC->ShowDamageNumber(LocalIncomingDamage, Props.TargetCharacter, bBlockedHit, bCriticalHit);
+			return;
+		}
+		// Player taking damage from someone
+		if (AAuraPlayerController* PC = Cast<AAuraPlayerController>(Props.TargetCharacter->Controller))
 		{
 			PC->ShowDamageNumber(LocalIncomingDamage, Props.TargetCharacter, bBlockedHit, bCriticalHit);
 		}
