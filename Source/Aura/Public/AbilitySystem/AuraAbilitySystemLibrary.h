@@ -71,6 +71,16 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "AuraAbilitySystemLibrary|GameplayEffects")
 	static void SetIsCriticalHit(UPARAM(ref) FGameplayEffectContextHandle& EffectContextHandle, bool bInIsCriticalHit);
+	/**
+	 * Searches for live players within a given sphere radius around the Origin.
+	 * @param WorldContextObject Required to call Static functions
+	 * @param OutLivePlayers Array of Actors that will be filled up with the live players
+	 * @param ActorsToIgnore Array of Actors that will be ignored
+	 * @param Radius Radius of the Sphere we will search in
+	 * @param Origin Origin of the sphere of search
+	 */
+	UFUNCTION(BlueprintCallable, Category = "AuraAbilitySystemLibrary|GameplayMechanics")
+	static void GetLivePlayersWithinRadius(const UObject* WorldContextObject, TArray<AActor*>& OutLivePlayers, const TArray<AActor*>& ActorsToIgnore, float Radius, const FVector& Origin);
 	
 	
 };
