@@ -31,11 +31,16 @@ public:
 	virtual AActor* GetAvatar_Implementation() override;
 	// only on server
 	virtual void Die() override;
+	virtual TArray<FTaggedMontage> GetAttackMontages_Implementation() override;
 	/** End Combat Interface */
 
 	// on both server and clients
 	UFUNCTION(NetMulticast, Reliable)
 	virtual void MulticastHandleDeath();
+
+	UPROPERTY(EditAnywhere, Category = "Combat")
+	TArray<FTaggedMontage> AttackMontages;
+	
 protected:
 	virtual void BeginPlay() override;
 
