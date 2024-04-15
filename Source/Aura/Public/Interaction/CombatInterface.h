@@ -42,8 +42,15 @@ class AURA_API ICombatInterface
 	// Add interface functions to this class. This is the class that will be inherited to implement this interface.
 public:
 	virtual int32 GetPlayerLevel();
+	/**
+	 * Returns the location of the socket based on the tag. The Character will have an Array of
+	 * Montages that it can choose from. Which are mapped to a MontageTag. The Ability will ask the Character for
+	 * which Montage to play. Then use this function to know which socket to put the Damage sphere on.
+	 * @param MontageTag Tag related to the socket
+	 * @return The location of the socket
+	 */
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
-	FVector GetCombatSocketLocation();
+	FVector GetCombatSocketLocation(const FGameplayTag& MontageTag);
 	UFUNCTION(BlueprintCallable, BlueprintImplementableEvent)
 	void SetMotionWarpTarget(const FVector& TargetLocation);
 

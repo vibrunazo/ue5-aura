@@ -15,7 +15,9 @@ void UAuraProjectileSpell::CastProjectile(const FVector& TargetLocation)
 	if (!ProjectileClass) return;
 	const bool bIsServer = GetAvatarActorFromActorInfo()->HasAuthority();
 	if (!bIsServer) return;
-	const FVector SocketLocation = ICombatInterface::Execute_GetCombatSocketLocation(GetAvatarActorFromActorInfo());
+	const FVector SocketLocation = ICombatInterface::Execute_GetCombatSocketLocation(
+		GetAvatarActorFromActorInfo(),
+		AuraTags::Montage_Attack_Weapon);
 	FVector UpdatedTarget = FVector(TargetLocation.X, TargetLocation.Y, GetAvatarActorFromActorInfo()->GetActorLocation().Z);
 	const float Distance = (UpdatedTarget - GetAvatarActorFromActorInfo()->GetActorLocation()).Length();
 	// If the target is too close to the caster, then target a little bit further behind the target to avoid casting backwards.
