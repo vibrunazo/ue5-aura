@@ -67,9 +67,9 @@ void AAuraCharacterBase::BeginPlay()
 FVector AAuraCharacterBase::GetCombatSocketLocation_Implementation(const FGameplayTag& MontageTag)
 {
 	if (MontageTag.MatchesTagExact(AuraTags::Montage_Attack_LeftHand))
-		return Weapon->GetSocketLocation(LeftHandSocketName);
+		return GetMesh()->GetSocketLocation(LeftHandSocketName);
 	if (MontageTag.MatchesTagExact(AuraTags::Montage_Attack_RightHand))
-		return Weapon->GetSocketLocation(RightHandSocketName);
+		return GetMesh()->GetSocketLocation(RightHandSocketName);
 	if (MontageTag.MatchesTagExact(AuraTags::Montage_Attack_Weapon) && IsValid(Weapon))
 		return Weapon->GetSocketLocation(WeaponTipSocketName);
 	return GetActorLocation();
