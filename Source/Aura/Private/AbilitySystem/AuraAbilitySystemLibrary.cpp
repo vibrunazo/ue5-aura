@@ -142,3 +142,11 @@ void UAuraAbilitySystemLibrary::GetLivePlayersWithinRadius(const UObject* WorldC
 		}
 	}
 }
+
+bool UAuraAbilitySystemLibrary::IsEnemyTeam(AActor* FirstActor, AActor* SecondActor)
+{
+	if (!IsValid(FirstActor) || !IsValid(SecondActor)) return false;
+	if (FirstActor->ActorHasTag(FName("Player")) && SecondActor->ActorHasTag(FName("Enemy"))) return true;
+	if (FirstActor->ActorHasTag(FName("Enemy")) && SecondActor->ActorHasTag(FName("Player"))) return true;
+	return false;
+}
