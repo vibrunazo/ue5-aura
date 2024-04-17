@@ -11,6 +11,7 @@
 #include "Components/AudioComponent.h"
 #include "Components/SphereComponent.h"
 #include "GameFramework/ProjectileMovementComponent.h"
+#include "Interaction/CombatInterface.h"
 #include "Kismet/GameplayStatics.h"
 
 // Sets default values
@@ -60,7 +61,8 @@ void AAuraProjectile::OnSphereOverlap(UPrimitiveComponent* OverlappedComponent, 
 	if (!DamageEffectSpecHandle.Data.IsValid()) return;
 	AActor* Source = DamageEffectSpecHandle.Data->GetContext().GetEffectCauser();
 	if (OtherActor == Source and !bHitSelf)	return;
-	if (!UAuraAbilitySystemLibrary::IsEnemyTeam(Source, OtherActor) && !bHitFriends) return;
+	
+	if (OtherActor->Implements<UCombatInterface>() && !UAuraAbilitySystemLibrary::IsEnemyTeam(Source, OtherActor) && !bHitFriends) return;
 	
 	if (!bHit)
 	{
