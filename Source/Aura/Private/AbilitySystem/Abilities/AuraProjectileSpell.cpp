@@ -18,7 +18,9 @@ void UAuraProjectileSpell::CastProjectile(const FVector& TargetLocation)
 	const FVector SocketLocation = ICombatInterface::Execute_GetCombatSocketLocation(
 		GetAvatarActorFromActorInfo(),
 		AuraTags::Montage_Attack_Weapon);
-	FVector UpdatedTarget = FVector(TargetLocation.X, TargetLocation.Y, GetAvatarActorFromActorInfo()->GetActorLocation().Z);
+	
+	FVector UpdatedTarget = TargetLocation;
+	// FVector UpdatedTarget = FVector(TargetLocation.X, TargetLocation.Y, GetAvatarActorFromActorInfo()->GetActorLocation().Z);
 	const float Distance = (UpdatedTarget - GetAvatarActorFromActorInfo()->GetActorLocation()).Length();
 	// If the target is too close to the caster, then target a little bit further behind the target to avoid casting backwards.
 	// Casting backwards would happen if the target is between the SocketLocation and the caster Location
@@ -27,8 +29,8 @@ void UAuraProjectileSpell::CastProjectile(const FVector& TargetLocation)
 		UpdatedTarget += (UpdatedTarget - GetAvatarActorFromActorInfo()->GetActorLocation()).GetSafeNormal() * 120.f;
 	}
 	FRotator Rotation = (UpdatedTarget - SocketLocation).Rotation();
-	
-	Rotation.Pitch = 0.f;
+
+	if (Rotation.Pitch < 0)	Rotation.Pitch = 0.f;
 	FTransform SpawnTransform;
 	SpawnTransform.SetLocation(SocketLocation);
 	// Set the projectile's rotation

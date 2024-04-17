@@ -26,9 +26,13 @@ public:
 	UPROPERTY(BlueprintReadWrite, meta = (ExposeOnSpawn = true))
 	FGameplayEffectSpecHandle DamageEffectSpecHandle;
 
-	/* Whether or not to hit the caster of this projectile */
+	/* Whether to hit the caster of this projectile */
 	UPROPERTY(BlueprintReadWrite, EditAnywhere, meta = (ExposeOnSpawn = true), Category = "Projectile")
 	bool bHitSelf = false;
+	
+	/* Whether to hit friends of the caster of this projectile */
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, meta = (ExposeOnSpawn = true), Category = "Projectile")
+	bool bHitFriends = false;
 
 	
 protected:

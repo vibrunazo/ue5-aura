@@ -6,6 +6,7 @@
 #include "AbilitySystemBlueprintLibrary.h"
 #include "AbilitySystemComponent.h"
 #include "NiagaraFunctionLibrary.h"
+#include "AbilitySystem/AuraAbilitySystemLibrary.h"
 #include "Aura/Aura.h"
 #include "Components/AudioComponent.h"
 #include "Components/SphereComponent.h"
@@ -57,11 +58,10 @@ void AAuraProjectile::OnSphereOverlap(UPrimitiveComponent* OverlappedComponent, 
 	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
 	if (!DamageEffectSpecHandle.Data.IsValid()) return;
-	const AActor* Source = DamageEffectSpecHandle.Data->GetContext().GetEffectCauser();
-	if (OtherActor == Source and !bHitSelf)
-	{
-		return;
-	}
+	AActor* Source = DamageEffectSpecHandle.Data->GetContext().GetEffectCauser();
+	if (OtherActor == Source and !bHitSelf)	return;
+	if (!UAuraAbilitySystemLibrary::IsEnemyTeam(Source, OtherActor) && !bHitFriends) return;
+	
 	if (!bHit)
 	{
 		UGameplayStatics::PlaySoundAtLocation(this, ImpactSound, GetActorLocation(), FRotator::ZeroRotator);
