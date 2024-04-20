@@ -7,6 +7,8 @@
 #include "UObject/Interface.h"
 #include "CombatInterface.generated.h"
 
+class UNiagaraSystem;
+class UAnimMontage;
 /**
  * Struct that maps a Montage to a MontageTag. Used by abilities to determine which Montage to play given
  * a Tag. Each Character has an Array of these Structs so they can choose
@@ -22,6 +24,9 @@ struct FTaggedMontage
 	
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	FGameplayTag MontageTag;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	USoundBase* ImpactSound = nullptr;
 };
 
 // This class does not need to be modified.
@@ -31,7 +36,6 @@ class UCombatInterface : public UInterface
 	GENERATED_BODY()
 };
 
-class UAnimMontage;
 /**
  * 
  */
@@ -67,4 +71,7 @@ public:
 
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
 	TArray<FTaggedMontage> GetAttackMontages();
+
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	UNiagaraSystem* GetBloodEffect();
 };
