@@ -17,7 +17,7 @@ void UAuraProjectileSpell::CastProjectile(const FVector& TargetLocation)
 	if (!bIsServer) return;
 	const FVector SocketLocation = ICombatInterface::Execute_GetCombatSocketLocation(
 		GetAvatarActorFromActorInfo(),
-		AuraTags::Montage_Attack_Weapon);
+		AuraTags::CombatSocket_Weapon);
 	
 	FVector UpdatedTarget = TargetLocation;
 	// FVector UpdatedTarget = FVector(TargetLocation.X, TargetLocation.Y, GetAvatarActorFromActorInfo()->GetActorLocation().Z);

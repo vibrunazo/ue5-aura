@@ -11,12 +11,13 @@ class UNiagaraSystem;
 class UAnimMontage;
 /**
  * Struct that maps a Montage to a MontageTag. Used by abilities to determine which Montage to play given
- * a Tag. Each Character has an Array of these Structs so they can choose
+ * a Tag. Each Character has an Array of these Structs, so they can choose
  * which Montage to play for each Tag.
  */
 USTRUCT(BlueprintType)
 struct FTaggedMontage
 {
+	
 	GENERATED_BODY()
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
@@ -24,6 +25,9 @@ struct FTaggedMontage
 	
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	FGameplayTag MontageTag;
+	
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	FGameplayTag SocketTag;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	USoundBase* ImpactSound = nullptr;
@@ -53,25 +57,35 @@ public:
 	 * @param MontageTag Tag related to the socket
 	 * @return The location of the socket
 	 */
-	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "CombatInterface")
 	FVector GetCombatSocketLocation(const FGameplayTag& MontageTag);
-	UFUNCTION(BlueprintCallable, BlueprintImplementableEvent)
+	UFUNCTION(BlueprintCallable, BlueprintImplementableEvent, Category = "CombatInterface")
 	void SetMotionWarpTarget(const FVector& TargetLocation);
 
-	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "CombatInterface")
 	UAnimMontage* GetHitReactMontage();
 
 	virtual void Die() = 0;
 
-	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "CombatInterface")
 	bool IsDead() const;
 
-	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "CombatInterface")
 	AActor* GetAvatar();
 
-	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "CombatInterface")
 	TArray<FTaggedMontage> GetAttackMontages();
 
-	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "CombatInterface")
 	UNiagaraSystem* GetBloodEffect();
+
+	/**
+	 * Returns the TaggedMontage that has given MontageTag and its other relevant data. The MontageTag is used as an index
+	 * to the Character's array of TaggedMontages. The TaggedMontage contains meta data related to that Montage. You could
+	 * use this function to get the ImpactSound that should be played for a given Montage.
+	 * @param MontageTag MontageTag to look up a TaggedMontage with. 
+	 * @return TaggedMontage that contains the given MontageTag plus the SocketTag, Montage and ImpactSound
+	 */
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "CombatInterface")
+	FTaggedMontage GetTaggedMontageByTag(const FGameplayTag& MontageTag);
 };
