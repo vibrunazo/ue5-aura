@@ -5,11 +5,10 @@
 
 #include "AbilitySystemBlueprintLibrary.h"
 #include "AbilitySystemComponent.h"
-#include "AuraGameplayTags.h"
 #include "Actor/AuraProjectile.h"
 #include "Interaction/CombatInterface.h"
 
-void UAuraProjectileSpell::CastProjectile(const FVector& TargetLocation)
+void UAuraProjectileSpell::CastProjectile(const FVector& TargetLocation, const FGameplayTag& SocketTag)
 {
 	if (!GetAvatarActorFromActorInfo() || !GetWorld()) return;
 	if (!ProjectileClass) return;
@@ -17,7 +16,7 @@ void UAuraProjectileSpell::CastProjectile(const FVector& TargetLocation)
 	if (!bIsServer) return;
 	const FVector SocketLocation = ICombatInterface::Execute_GetCombatSocketLocation(
 		GetAvatarActorFromActorInfo(),
-		AuraTags::CombatSocket_Weapon);
+		SocketTag);
 	
 	FVector UpdatedTarget = TargetLocation;
 	// FVector UpdatedTarget = FVector(TargetLocation.X, TargetLocation.Y, GetAvatarActorFromActorInfo()->GetActorLocation().Z);
