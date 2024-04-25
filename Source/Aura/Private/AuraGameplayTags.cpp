@@ -51,6 +51,7 @@ namespace AuraTags
 	UE_DEFINE_GAMEPLAY_TAG_COMMENT(Abilities_Attack, "Abilities.Attack", "An attack ability");
 	UE_DEFINE_GAMEPLAY_TAG_COMMENT(CombatSocket_LeftHand, "CombatSocket.LeftHand", "Refers to the Socket on the left hand. Used by Abilities to tell where to place the hitbox");
 	UE_DEFINE_GAMEPLAY_TAG_COMMENT(CombatSocket_RightHand, "CombatSocket.RightHand", "Refers to the Socket on the right hand. Used by Abilities to tell where to place the hitbox");
+	UE_DEFINE_GAMEPLAY_TAG_COMMENT(CombatSocket_Tail, "CombatSocket.Tail", "Refers to the Socket on the tail. Used by Abilities to tell where to place the hitbox");
 	UE_DEFINE_GAMEPLAY_TAG_COMMENT(CombatSocket_Weapon, "CombatSocket.Weapon", "Refers to the Socket on the weapon. Used by Abilities to tell where to place the hitbox");
 
 	UE_DEFINE_GAMEPLAY_TAG_COMMENT(Montage_Attack_1, "Montage.Attack.1", "Used in Characters to index their Attack Montages");

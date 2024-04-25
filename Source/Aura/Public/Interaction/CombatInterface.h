@@ -54,11 +54,11 @@ public:
 	 * Returns the location of the socket based on the tag. The Character will have an Array of
 	 * Montages that it can choose from. Which are mapped to a MontageTag. The Ability will ask the Character for
 	 * which Montage to play. Then use this function to know which socket to put the Damage sphere on.
-	 * @param MontageTag Tag related to the socket
+	 * @param SocketTag Tag related to the socket
 	 * @return The location of the socket
 	 */
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "CombatInterface")
-	FVector GetCombatSocketLocation(const FGameplayTag& MontageTag);
+	FVector GetCombatSocketLocation(const FGameplayTag& SocketTag);
 	UFUNCTION(BlueprintCallable, BlueprintImplementableEvent, Category = "CombatInterface")
 	void SetMotionWarpTarget(const FVector& TargetLocation);
 
