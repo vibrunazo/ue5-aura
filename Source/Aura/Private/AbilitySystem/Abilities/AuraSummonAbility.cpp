@@ -31,10 +31,15 @@ TArray<FVector> UAuraSummonAbility::GetSpawnLocations()
 		// draw a debug arrow for each line by adding the delta spread angle to the left of the spread
 		const FVector Direction = LeftOfSpread.RotateAngleAxis(i * DeltaSpread, FVector::UpVector);
 		TryDrawDebugArrow(Location, Location + Direction * MaxSpawnDistance, FColor::White);
-		const FVector ChosenSpawnLocation = Location + Direction * FMath::FRandRange(MinSpawnDistance, MaxSpawnDistance);
+		FVector ChosenSpawnLocation = Location + Direction * FMath::FRandRange(MinSpawnDistance, MaxSpawnDistance);
+		FHitResult Hit;
+		GetWorld()->LineTraceSingleByChannel(Hit, ChosenSpawnLocation + FVector(0, 0, 300), ChosenSpawnLocation - FVector(0, 0, 300), ECollisionChannel::ECC_Visibility);
+		if (Hit.bBlockingHit)
+		{
+			ChosenSpawnLocation = Hit.ImpactPoint;
+		}
 		TryDrawDebugSphere(ChosenSpawnLocation, FColor::Magenta);
 		SpawnLocations.Add(ChosenSpawnLocation);
-		
 	}
 	
 	return SpawnLocations;
