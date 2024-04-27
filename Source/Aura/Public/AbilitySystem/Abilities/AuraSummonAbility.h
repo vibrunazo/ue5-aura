@@ -50,6 +50,13 @@ public:
 	UPROPERTY(EditDefaultsOnly, Category = "Summoning")
 	bool bDebug = false;
 
+	/**
+	 * Returns a random class from MinionClasses
+	 * @return a random class from MinionClasses
+	 */
+	UFUNCTION(BlueprintPure, Category = "Summoning")
+	TSubclassOf<APawn> GetRandomMinionClass();
+
 protected:
 	/** If dDebug is true. Draws a debug sphere. */
 	void TryDrawDebugSphere(const FVector& Location, FColor Color, float Radius = 5.0f) const;

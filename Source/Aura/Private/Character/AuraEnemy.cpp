@@ -106,6 +106,12 @@ void AAuraEnemy::HitReactTagChanged(const FGameplayTag CallbackTag, int32 NewCou
 	bHitReacting = NewCount > 0;
 	GetCharacterMovement()->MaxWalkSpeed = bHitReacting ? 0 : BaseWalkSpeed;
 	if (!HasAuthority()) return;
+	if (!AuraAIController)
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 6.0f, FColor::Red, FString::Printf(TEXT("ERROR: %s has no AuraAIController"), *GetName()));
+		return;
+	}
+	if (!AuraAIController->GetBlackboardComponent()) return;
 	AuraAIController->GetBlackboardComponent()->SetValueAsBool(FName("HitReacting"), bHitReacting);
 }
 

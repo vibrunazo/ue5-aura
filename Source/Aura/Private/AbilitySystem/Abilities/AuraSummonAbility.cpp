@@ -54,6 +54,16 @@ void UAuraSummonAbility::DelayedSpawnSingle(const float Delay, const FVector Loc
 	GetWorld()->GetTimerManager().SetTimer(Handle, TimerDel, Delay, false);
 }
 
+TSubclassOf<APawn> UAuraSummonAbility::GetRandomMinionClass()
+{
+	if (MinionClasses.IsEmpty())
+	{
+		return TSubclassOf<APawn>();
+	}
+	const int32 Selection = FMath::RandRange(0, MinionClasses.Num() - 1);
+	return MinionClasses[Selection];
+}
+
 void UAuraSummonAbility::TryDrawDebugSphere(const FVector& Location, const FColor Color, const float Radius) const
 {
 	if (!bDebug) return;
