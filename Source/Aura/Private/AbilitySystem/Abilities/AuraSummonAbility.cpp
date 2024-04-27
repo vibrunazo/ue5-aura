@@ -45,6 +45,15 @@ TArray<FVector> UAuraSummonAbility::GetSpawnLocations()
 	return SpawnLocations;
 }
 
+void UAuraSummonAbility::DelayedSpawnSingle(const float Delay, const FVector Location)
+{
+	FTimerHandle Handle;
+	FTimerDelegate TimerDel;
+	// Bind the function with parameters
+	TimerDel.BindUFunction(this, FName("SpawnSingle"), Location);
+	GetWorld()->GetTimerManager().SetTimer(Handle, TimerDel, Delay, false);
+}
+
 void UAuraSummonAbility::TryDrawDebugSphere(const FVector& Location, const FColor Color, const float Radius) const
 {
 	if (!bDebug) return;

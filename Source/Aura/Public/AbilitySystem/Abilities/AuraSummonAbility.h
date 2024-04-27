@@ -18,6 +18,18 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Summoning")
 	TArray<FVector> GetSpawnLocations();
 
+	/**
+	 * Calls SpawnSingle after given delay.
+	 */
+	UFUNCTION(BlueprintCallable, Category = "Summoning")
+	void DelayedSpawnSingle(const float Delay = 0.0f, const FVector Location = FVector::ZeroVector);
+
+	/**
+	 * Implement logic for spawning a single minion in BPs here. Called by DelayedSpawn.
+	 */
+	UFUNCTION(BlueprintCallable, BlueprintImplementableEvent, Category = "Summoning")
+	void SpawnSingle(const FVector Location);
+
 	UPROPERTY(EditDefaultsOnly, Category = "Summoning")
 	int32 NumMinions = 5;
 
