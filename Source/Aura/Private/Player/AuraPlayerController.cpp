@@ -179,7 +179,8 @@ void AAuraPlayerController::AbilityInputTagHeld(FGameplayTag InputTag)
 	// If it's not LMB, it's a regular ability button, so cast that ability
 	if (!InputTag.MatchesTagExact(AuraTags::InputTag_LMB))
 	{
-		if (GetASC()) GetASC()->AbilityInputHeld(InputTag);
+		UAuraAbilitySystemComponent* ASC = GetASC();
+		if (ASC) ASC->AbilityInputHeld(InputTag);
 		return;
 	}
 	// If it is LMB, then either Move or cast the LMB ability
