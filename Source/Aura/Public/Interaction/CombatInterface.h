@@ -88,4 +88,10 @@ public:
 	 */
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "CombatInterface")
 	FTaggedMontage GetTaggedMontageByTag(const FGameplayTag& MontageTag);
+
+	/**
+	 * Returns the number of Minions that the Character has.
+	 */
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "CombatInterface")
+	int32 GetMinionCount();
 };
