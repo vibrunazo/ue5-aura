@@ -94,4 +94,12 @@ public:
 	 */
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "CombatInterface")
 	int32 GetMinionCount();
+	
+	/**
+	 * Increments the number of Minions that the Character has spawned currently by given Amount.
+	 */
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category = "CombatInterface")
+	void IncrementMinionCount(int32 Amount = 1);
+
+	
 };
