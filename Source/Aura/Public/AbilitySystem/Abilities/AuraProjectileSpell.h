@@ -18,7 +18,7 @@ class AURA_API UAuraProjectileSpell : public UAuraDamageGameplayAbility
 
 protected:
 	UFUNCTION(BlueprintCallable, Category = "Projectile", meta = (AutoCreateRefTerm = "SocketTag"))
-	void CastProjectile(const FVector& TargetLocation, const FGameplayTag& SocketTag);
+	void CastProjectile(const FVector& TargetLocation, const FGameplayTag& SocketTag, float PitchOffset = 0.f, FVector SpawnOffset = FVector::ZeroVector);
 	virtual void ActivateAbility(const FGameplayAbilitySpecHandle Handle, const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilityActivationInfo ActivationInfo, const FGameplayEventData* TriggerEventData) override;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)

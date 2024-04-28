@@ -84,6 +84,8 @@ void AAuraCharacterBase::MulticastHandleDeath_Implementation()
 	GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	Dissolve();
 	bDead = true;
+
+	OnDied.Broadcast(this);
 }
 
 void AAuraCharacterBase::BeginPlay()

@@ -8,7 +8,7 @@
 #include "Actor/AuraProjectile.h"
 #include "Interaction/CombatInterface.h"
 
-void UAuraProjectileSpell::CastProjectile(const FVector& TargetLocation, const FGameplayTag& SocketTag)
+void UAuraProjectileSpell::CastProjectile(const FVector& TargetLocation, const FGameplayTag& SocketTag, float PitchOffset, FVector SpawnOffset)
 {
 	if (!GetAvatarActorFromActorInfo() || !GetWorld()) return;
 	if (!ProjectileClass) return;
@@ -28,10 +28,14 @@ void UAuraProjectileSpell::CastProjectile(const FVector& TargetLocation, const F
 		UpdatedTarget += (UpdatedTarget - GetAvatarActorFromActorInfo()->GetActorLocation()).GetSafeNormal() * 120.f;
 	}
 	FRotator Rotation = (UpdatedTarget - SocketLocation).Rotation();
+	Rotation.Pitch += PitchOffset;
 
 	if (Rotation.Pitch < 0)	Rotation.Pitch = 0.f;
 	FTransform SpawnTransform;
-	SpawnTransform.SetLocation(SocketLocation);
+	// Rotate SpawnOffset to match the rotation of the projectile
+	SpawnOffset = SpawnOffset.RotateAngleAxis(Rotation.Yaw, FVector::UpVector);
+	
+	SpawnTransform.SetLocation(SocketLocation + SpawnOffset);
 	// Set the projectile's rotation
 	SpawnTransform.SetRotation(Rotation.Quaternion());
 	

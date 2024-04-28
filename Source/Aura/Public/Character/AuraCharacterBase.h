@@ -8,6 +8,12 @@
 #include "Interaction/CombatInterface.h"
 #include "AuraCharacterBase.generated.h"
 
+class AAuraCharacterBase;
+
+// DECLARE_DYNAMIC_MULTICAST_SPARSE_DELEGATE_OneParam(FDiedSignature, AAuraCharacterBase, OnDied, AAuraCharacterBase*, DyingCharacter );
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FDiedSignature, AAuraCharacterBase*, DyingCharacter);
+
+
 class UNiagaraSystem;
 class UAuraGameplayAbility;
 class UGameplayEffect;
@@ -25,7 +31,7 @@ public:
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
 	UAttributeSet* GetAttributeSet() const { return  AttributeSet; }
 
-	/** Combat Interface */
+	/* Combat Interface */
 	virtual UAnimMontage* GetHitReactMontage_Implementation() override;
 	
 	virtual FVector GetCombatSocketLocation_Implementation(const FGameplayTag& SocketTag) override;
@@ -38,12 +44,17 @@ public:
 	virtual FTaggedMontage GetTaggedMontageByTag_Implementation(const FGameplayTag& SocketTag) override;
 	virtual int32 GetMinionCount_Implementation() override;
 	virtual void IncrementMinionCount_Implementation(int32 Amount = 1) override;
-	/** End Combat Interface */
+	/* End Combat Interface */
 
-	// on both server and clients
+	/** Called when the Character dies on both server and clients */
 	UFUNCTION(NetMulticast, Reliable)
 	virtual void MulticastHandleDeath();
+	
+	/** Event triggered when the Character dies. */
+	UPROPERTY(BlueprintAssignable, Category="Combat")
+	FDiedSignature OnDied;
 
+	/** The Montages for the Character's Attack. */
 	UPROPERTY(EditAnywhere, Category = "Combat")
 	TArray<FTaggedMontage> AttackMontages;
 	
