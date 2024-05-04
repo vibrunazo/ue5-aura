@@ -49,6 +49,7 @@ namespace AuraTags
 
 	UE_DECLARE_GAMEPLAY_TAG_EXTERN(Abilities_Attack)
 	UE_DECLARE_GAMEPLAY_TAG_EXTERN(Abilities_Summon)
+	UE_DECLARE_GAMEPLAY_TAG_EXTERN(Abilities_Fire_FireBolt)
 	
 	UE_DECLARE_GAMEPLAY_TAG_EXTERN(CombatSocket_LeftHand)
 	UE_DECLARE_GAMEPLAY_TAG_EXTERN(CombatSocket_RightHand)

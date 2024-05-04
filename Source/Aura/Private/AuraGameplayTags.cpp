@@ -50,6 +50,7 @@ namespace AuraTags
 
 	UE_DEFINE_GAMEPLAY_TAG_COMMENT(Abilities_Attack, "Abilities.Attack", "An attack ability. Set on Abilities' defaults as their Ability Tag. Used to activate abilities by tag.");
 	UE_DEFINE_GAMEPLAY_TAG_COMMENT(Abilities_Summon, "Abilities.Summon", "A summon ability. Set on Abilities' defaults as their Ability Tag. Used to activate abilities by tag.");
+	UE_DEFINE_GAMEPLAY_TAG_COMMENT(Abilities_Fire_FireBolt, "Abilities.Fire.FireBolt", "Used to index Abilities in the AbilitiInfo DataAsset. Which is used to get UI meta data for each Ability");
 
 	
 	UE_DEFINE_GAMEPLAY_TAG_COMMENT(CombatSocket_LeftHand, "CombatSocket.LeftHand", "Refers to the Socket on the left hand. Used by Abilities to tell where to place the hitbox");
