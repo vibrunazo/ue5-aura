@@ -37,8 +37,16 @@ void UOverlayWidgetController::BindCallbacksToDependencies()
 	BindAttributeChangeDelegate(AuraAttributes->GetManaAttribute(), &OnManaChanged);
 	BindAttributeChangeDelegate(AuraAttributes->GetMaxManaAttribute(), &OnMaxManaChanged);
 
-	// Bind the effect asset tags to the ability system component
-	Cast<UAuraAbilitySystemComponent>(AbilitySystemComponent)->EffectAssetTags.AddLambda(
+	UAuraAbilitySystemComponent* AuraASC = Cast<UAuraAbilitySystemComponent>(AbilitySystemComponent);
+	if (!AuraASC) return;
+
+	if (AuraASC->bStartupAbilitiesGiven) OnInitializeStartupAbilities(AuraASC);
+	else
+		AuraASC->AbilitiesGivenDelegate.AddUObject(this, &UOverlayWidgetController::OnInitializeStartupAbilities);
+	
+	// Bind delegate to listen for effect changes for UI messages (ie "you collected a health potion")
+	// and broadcast them for message widgets
+	AuraASC->EffectAssetTags.AddLambda(
 		[this](const FGameplayTagContainer& AssetTags)
 		{
 			for (const FGameplayTag& Tag : AssetTags)
@@ -52,4 +60,12 @@ void UOverlayWidgetController::BindCallbacksToDependencies()
 			}
 		}
 	);
+}
+
+void UOverlayWidgetController::OnInitializeStartupAbilities(UAuraAbilitySystemComponent* AuraASC)
+{
+	if (!AuraASC->bStartupAbilitiesGiven) return;
+
+	// TODO Get information about all abilities given, look up their ability info and broadcast it to the UI widgets
+	GEngine->AddOnScreenDebugMessage(-1, 6.0f, FColor::Yellow, FString::Printf(TEXT("Startup Abilities given!")));
 }

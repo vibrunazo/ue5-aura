@@ -27,6 +27,8 @@ void UAuraAbilitySystemComponent::AddCharacterAbilities(
 			GiveAbility(AbilitySpec);
 		}
 	}
+	bStartupAbilitiesGiven = true;
+	AbilitiesGivenDelegate.Broadcast(this);
 }
 
 void UAuraAbilitySystemComponent::AbilityInputHeld(const FGameplayTag& InputTag)
