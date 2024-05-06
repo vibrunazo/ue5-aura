@@ -10,6 +10,8 @@ class UAuraAbilitySystemComponent;
 class UAuraGameplayAbility;
 DECLARE_MULTICAST_DELEGATE_OneParam(FEffectAssetTags, const FGameplayTagContainer& /* AssetTags */);
 DECLARE_MULTICAST_DELEGATE_OneParam(FAbilitiesGiven, UAuraAbilitySystemComponent*);
+DECLARE_DELEGATE_OneParam(FForEachAbility, const FGameplayAbilitySpec&);
+
 
 /**
  * 
@@ -41,6 +43,27 @@ public:
 
 	void AbilityInputHeld(const FGameplayTag& InputTag);
 	void AbilityInputReleased(const FGameplayTag& InputTag);
+	/**
+	 * Executes a function for each ability spec in the ASC
+	 * @param Delegate Function that will be called for each ability spec 
+	 */
+	void ExecForEachAbility(const FForEachAbility& Delegate);
+
+	/**
+	 * Returns the first Tag starting with "Abilities" in the spec's ability tags container.
+	 * for example: "Abilities.FireBolt".
+	 * @param Spec The ability spec
+	 * @return The associated tag
+	 */
+	static FGameplayTag GetAbilityTagFromSpec(const FGameplayAbilitySpec& Spec);
+	/**
+	 * Returns the first Tag starting with "InputTag" in the spec's Dynamic tags container.
+	 * for example: "InputTag.LMB".
+	 * This is the tag that should be used to bind input to abilities.
+	 * @param Spec The ability spec
+	 * @return The input tag
+	 */
+	static FGameplayTag GetInputTagFromSpec(const FGameplayAbilitySpec& Spec);
 
 protected:
 	UFUNCTION(Client, Reliable)

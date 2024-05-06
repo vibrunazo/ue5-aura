@@ -13,7 +13,7 @@ struct FAuraAbilityInfo
 	GENERATED_BODY()
 
 	/**
-	 * Used to index Abilities in the AbilitiInfo DataAsset. Which is used to get UI meta data for each Ability.
+	 * Used to index Abilities in the AbilityInfo DataAsset. Which is used to get UI metadata for each Ability.
 	 */
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	FGameplayTag AbilityTag = FGameplayTag();
@@ -31,7 +31,8 @@ struct FAuraAbilityInfo
 };
 
 /**
- * 
+ * Data Asset that contains an Array of FAuraAbilityInfo structs.
+ * Used to get UI metadata for each Ability.
  */
 UCLASS()
 class AURA_API UAbilityInfo : public UDataAsset
@@ -40,9 +41,11 @@ class AURA_API UAbilityInfo : public UDataAsset
 
 public:
 
+	/** Array of FAuraAbilityInfo structs. */
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Ability Information")
 	TArray<FAuraAbilityInfo> AbilityInformation;
 
+	/** Returns the FAuraAbilityInfo struct indexed with given AbilityTag. */
 	FAuraAbilityInfo FindAbilityInfoForTag(const FGameplayTag& AbilityTag, bool bLogError = false) const;
 	
 };
