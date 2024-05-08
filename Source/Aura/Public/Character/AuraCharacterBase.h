@@ -104,6 +104,7 @@ protected:
 	void ApplyEffectToSelf(TSubclassOf<UGameplayEffect> GameplayEffectClass, float Level) const;
 	virtual void InitializeDefaultAttributes() const;
 
+	/** Adds the StartupAbilities array to the Character's Ability System. Used only by Aura. Called only on Server. */
 	void AddCharacterAbilities() const;
 
 	/* Dissolve effects */
@@ -133,6 +134,8 @@ protected:
 
 	
 private:
+	/** Abilities that are added to the ASC at Startup
+	 * Used only by Aura, Enemies use CharacterClass DataAsset instead */
 	UPROPERTY(EditAnywhere, Category = "Abilities")
 	TArray<TSubclassOf<UAuraGameplayAbility>> StartupAbilities;
 

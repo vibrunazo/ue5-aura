@@ -35,6 +35,11 @@ public:
 	 */
 	FAbilitiesGiven AbilitiesGivenDelegate;
 
+	/**
+	 * Adds the given Abilities array to the Character's Ability System. Used only by Aura. Called only on Server for
+	 * Startup Abilities.
+	 * @param StartupAbilities The list of abilities to add
+	 */
 	void AddCharacterAbilities(const TArray<TSubclassOf<UAuraGameplayAbility>>& StartupAbilities);
 	// Set after all startup abilities were given to controlled Pawn, just before the AbilitiesGivenDelegate is broadcast.
 	// Used by the Widget Controller to determine whether it bound to the AbilitiesGivenDelegate too late
@@ -66,6 +71,7 @@ public:
 	static FGameplayTag GetInputTagFromSpec(const FGameplayAbilitySpec& Spec);
 
 protected:
+	virtual void OnRep_ActivateAbilities() override;
 	UFUNCTION(Client, Reliable)
 	void ClientEffectApplied(UAbilitySystemComponent* AbilitySystemComponent, const FGameplayEffectSpec& EffectSpec, FActiveGameplayEffectHandle ActiveEffectHandle);
 
