@@ -109,7 +109,7 @@ FGameplayTag UAuraAbilitySystemComponent::GetInputTagFromSpec(const FGameplayAbi
 void UAuraAbilitySystemComponent::OnRep_ActivateAbilities()
 {
 	Super::OnRep_ActivateAbilities();
-
+	
 	if (!bStartupAbilitiesGiven)
 	{
 		bStartupAbilitiesGiven = true;
