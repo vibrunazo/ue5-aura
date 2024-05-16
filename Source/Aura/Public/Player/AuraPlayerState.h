@@ -9,6 +9,10 @@
 
 class UAuraAbilitySystemComponent;
 class UAttributeSet;
+
+DECLARE_MULTICAST_DELEGATE_OneParam(FOnStatChanged, int32 /** New Value */);
+
+
 /**
  * 
  */
@@ -22,7 +26,24 @@ public:
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
 	UAttributeSet* GetAttributeSet() const { return  AttributeSet; }
-	FORCEINLINE int32 GetPlayerLevel() const { return PlayerLevel; } 
+	UFUNCTION(BlueprintCallable, Category = "Player Level")
+	FORCEINLINE int32 GetPlayerLevel() const { return PlayerLevel; }
+	UFUNCTION(BlueprintCallable, Category = "Player Level")
+	void SetPlayerLevel(int32 NewLevel);
+	UFUNCTION(BlueprintCallable, Category = "Player Level")
+	void AddPlayerLevel(int32 Amount);
+	
+	FOnStatChanged OnPlayerLevelChanged;
+	
+	UFUNCTION(BlueprintCallable, Category = "Experience")
+	FORCEINLINE int32 GetXP() const { return XP; }
+	UFUNCTION(BlueprintCallable, Category = "Experience")
+	void SetXP(int32 NewXP);
+	UFUNCTION(BlueprintCallable, Category = "Experience")
+	void AddXP(int32 Amount);
+
+	FOnStatChanged OnXPChanged;
+
 
 protected:
 	UPROPERTY(VisibleAnywhere)
@@ -35,5 +56,13 @@ protected:
 	int32 PlayerLevel = 1;
 
 	UFUNCTION()
-	void OnRep_PlayerLevel();
+	void OnRep_PlayerLevel(int32 OldLevel);
+
+	// The current experience points of the player, replicated with notification
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, ReplicatedUsing = OnRep_XP)
+	int32 XP;
+
+	// RepNotify function for XP
+	UFUNCTION()
+	void OnRep_XP(int32 OldXP);
 };
