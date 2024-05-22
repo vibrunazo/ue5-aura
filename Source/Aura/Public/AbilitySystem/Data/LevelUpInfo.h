@@ -41,6 +41,15 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Level Up Information")
 	TArray<FSingleLevelInfo> AllLevelsInfo;
 
+
+	/**
+	 * Returns how far are we into the current level in percentage.
+	 *
+	 * @param TotalXP Our Total XP.
+	 * @return The percentage of XP into current level.
+	 */
+	float GetPercentXPInCurrentLevel(int32 TotalXP) const;
+
 	/**
 	 * Finds the level corresponding to the given experience points (XP).
 	 *
@@ -56,6 +65,6 @@ public:
 	 *       by the XP required to reach each level.
 	 */
 	UFUNCTION(BlueprintCallable, Category = "Level Up Information")
-	int32 FindLevelForXP(int32 XP) const;
+	float FindLevelForXP(int32 XP) const;
 	
 };

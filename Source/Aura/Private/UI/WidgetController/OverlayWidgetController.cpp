@@ -7,6 +7,8 @@
 #include "AbilitySystem/AuraAttributeSet.h"
 #include "AbilitySystem/Abilities/AuraGameplayAbility.h"
 #include "AbilitySystem/Data/AbilityInfo.h"
+#include "AbilitySystem/Data/LevelUpInfo.h"
+#include "Player/AuraPlayerState.h"
 
 void UOverlayWidgetController::BroadcastInitialValues()
 {
@@ -48,7 +50,7 @@ void UOverlayWidgetController::BindCallbacksToDependencies()
 	
 	// Bind delegate to listen for effect changes for UI messages (ie "you collected a health potion")
 	// and broadcast them for message widgets
-	AuraASC->EffectAssetTags.AddLambda(
+	AuraASC->EffectAssetTagsChangedDelegate.AddLambda(
 		[this](const FGameplayTagContainer& AssetTags)
 		{
 			for (const FGameplayTag& Tag : AssetTags)
@@ -62,6 +64,18 @@ void UOverlayWidgetController::BindCallbacksToDependencies()
 			}
 		}
 	);
+
+	if (AAuraPlayerState* AuraPlayerState = Cast<AAuraPlayerState>(PlayerState))
+	{
+		AuraPlayerState->OnPlayerLevelChanged.AddLambda(
+			[this](int32 NewLevel)
+			{
+				OnPlayerLevelChanged.Broadcast(NewLevel);
+			}
+		);
+
+		AuraPlayerState->OnXPChanged.AddUObject(this, &UOverlayWidgetController::OnXPChanged);
+	}
 }
 
 void UOverlayWidgetController::OnInitializeStartupAbilities(UAuraAbilitySystemComponent* AuraASC)
@@ -81,4 +95,13 @@ void UOverlayWidgetController::OnInitializeStartupAbilities(UAuraAbilitySystemCo
 	});
 	AuraASC->ExecForEachAbility(BroadcastDelegate);
 	
+}
+
+void UOverlayWidgetController::OnXPChanged(int32 NewXP) const
+{
+	AAuraPlayerState* AuraPlayerState = CastChecked<AAuraPlayerState>(PlayerState);
+	float NewLevel = AuraPlayerState->LevelUpInfo->FindLevelForXP(NewXP);
+	// gets the decimal part of the Level, example, Level = 9.3, Percent = 0.3
+	float Percent = NewLevel - FMath::Floor(NewLevel);
+	OnXPPercentChangedDelegate.Broadcast(Percent);
 }

@@ -6,7 +6,6 @@
 #include "UI/WidgetController/AuraWidgetController.h"
 #include "OverlayWidgetController.generated.h"
 
-class ULevelUpInfo;
 struct FAuraAbilityInfo;
 class UAuraAbilitySystemComponent;
 class UAbilityInfo;
@@ -61,8 +60,15 @@ public:
 	UPROPERTY(BlueprintAssignable, Category="GAS|Attributes")
 	FOnAttributeChangedSignature OnMaxManaChanged;
 
+	/** Broadcast when XP changes, outputs the percent of XP in this level from 0 to 1. */
+	UPROPERTY(BlueprintAssignable, Category="Experience")
+	FOnAttributeChangedSignature OnXPPercentChangedDelegate;
+	
+	UPROPERTY(BlueprintAssignable, Category="Player Level")
+	FOnAttributeChangedSignature OnPlayerLevelChanged;
+
 	/**
-	 * Delegate Broadcasted when an Item Pickup message is received. Such as "you picked up a health potion".
+	 * Delegate Broadcast when an Item Pickup message is received. Such as "you picked up a health potion".
 	 */
 	UPROPERTY(BlueprintAssignable, Category="GAS|Messages")
 	FMessageWidgetRowSignature MessageWidgetRowDelegate;
@@ -77,15 +83,17 @@ protected:
 	/** Data Asset containing array of struct with info that will be used to get UI metadata for each ability. */
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Widget Data")
 	TObjectPtr<UAbilityInfo> AbilityInfo;
-
-	/** Data Asset containing info about each Level Up. */
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Widget Data")
-	TObjectPtr<ULevelUpInfo> LevelUpInfo;
+	//
+	// /** Data Asset containing info about each Level Up. */
+	// UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Widget Data")
+	// TObjectPtr<ULevelUpInfo> LevelUpInfo;
 	
 	template<typename T>
 	T* GetDataTableRowByTag(UDataTable* DataTable, const FGameplayTag& Tag);
 
 	void OnInitializeStartupAbilities(UAuraAbilitySystemComponent* AuraASC);
+
+	void OnXPChanged(int32 NewXP) const;
 	
 };
 

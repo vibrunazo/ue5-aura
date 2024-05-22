@@ -27,7 +27,7 @@ public:
 	 * Delegate called when an effect is applied to the owning actor.
 	 * @param FGameplayTagContainer The container with the effects spec that were applied
 	 */
-	FEffectAssetTags EffectAssetTags;
+	FEffectAssetTags EffectAssetTagsChangedDelegate;
 	/**
 	 * Delegate called when the ASC has given all startup Abilities to the controlled Pawn.
 	 * Bound by the Widget Controller so widgets can know when to update abilities info the UI.

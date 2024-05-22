@@ -7,6 +7,7 @@
 #include "GameFramework/PlayerState.h"
 #include "AuraPlayerState.generated.h"
 
+class ULevelUpInfo;
 class UAuraAbilitySystemComponent;
 class UAttributeSet;
 
@@ -43,6 +44,10 @@ public:
 	void AddXP(int32 Amount);
 
 	FOnStatChanged OnXPChanged;
+	
+	/** Data Asset containing info about each Level Up. */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Level Data")
+	TObjectPtr<ULevelUpInfo> LevelUpInfo;
 
 
 protected:
@@ -65,4 +70,5 @@ protected:
 	// RepNotify function for XP
 	UFUNCTION()
 	void OnRep_XP(int32 OldXP);
+
 };
