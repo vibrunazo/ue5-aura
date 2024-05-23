@@ -51,14 +51,25 @@ public:
 	static void GiveStartupAbilities(const UObject* WorldContextObject, UAbilitySystemComponent* ASC, ECharacterClass CharacterClass);
 
 	/**
-	 * Returns the CharacterClassDefaultInfo Asset, stored in the GameMode. And stores common classes related to each
-	 * Character Class. Can only be called on the server since the GameMode only exists on the server. Will return a
+	 * Returns the CharacterClassDefaultInfo Asset, stored in the GameMode. And stores common classes related to all
+	 * Character Classes. Can only be called on the server since the GameMode only exists on the server. Will return a
 	 * nullptr if called on a client.
 	 * @param WorldContextObject Any in-game Object. Required to get the GameMode
 	 * @return The CharacterClassDefaultInfo Asset
 	 */
 	UFUNCTION(BlueprintCallable, Category = "AuraAbilitySystemLibrary|CharacterClassDefaults", meta = (WorldContext="WorldContextObject"))
 	static UCharacterClassInfo* GetCharacterClassInfo(const UObject* WorldContextObject);
+
+	/**
+	 * Returns the XP rewarded for killing an enemy of the given CharacterClass at the given Level. Since it requires a
+	 * GameMode, it can only be called on the server. Will return 0 if called on a client.
+	 * @param WorldContextObject Any in-game Object. Required to get the GameMode
+	 * @param CharacterClass Character Class we want to get the XP awarded for
+	 * @param Level Level the enemy was when killed
+	 * @return The XP rewarded
+	 */
+	UFUNCTION(BlueprintPure, Category = "AuraAbilitySystemLibrary|CharacterClassDefaults")
+	static int32 GetXPRewarded(const UObject* WorldContextObject, ECharacterClass CharacterClass, float Level);
 
 	UFUNCTION(BlueprintPure, Category = "AuraAbilitySystemLibrary|GameplayEffects")
 	static bool IsBlockedHit(const FGameplayEffectContextHandle& EffectContextHandle);
@@ -84,5 +95,6 @@ public:
 
 	UFUNCTION(BlueprintPure, Category = "AuraAbilitySystemLibrary|GameplayMechanics")
 	static bool IsEnemyTeam(AActor* FirstActor, AActor* SecondActor);
+
 	
 };

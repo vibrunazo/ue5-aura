@@ -87,7 +87,6 @@ void AAuraEnemy::Die()
 	Super::Die();
 }
 
-
 void AAuraEnemy::BeginPlay()
 {
 	Super::BeginPlay();

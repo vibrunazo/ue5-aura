@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "ScalableFloat.h"
 #include "Engine/DataAsset.h"
 #include "CharacterClassInfo.generated.h"
 
@@ -23,14 +24,17 @@ struct FCharacterClassDefaultInfo
 {
 	GENERATED_BODY()
 
+	/** Starting attributes for this Class */
 	UPROPERTY(EditDefaultsOnly, Category = "Class Defaults")
 	TSubclassOf<UGameplayEffect> PrimaryAttributes;
 
-	/**
-	 * Abilities that are common to each specific class
-	 */
+	/** Abilities that are common to each specific class */
 	UPROPERTY(EditDefaultsOnly, Category = "Class Defaults")
 	TArray<TSubclassOf<UGameplayAbility>> ClassAbilities;
+
+	/** Scalable float with experience rewarded per level */
+	UPROPERTY(EditDefaultsOnly, Category = "Class Defaults")
+	FScalableFloat XPRewarded;
 
 };
 
@@ -58,5 +62,11 @@ public:
 	UPROPERTY(EditDefaultsOnly, Category = "Common Class Defaultas|Damage")
 	TObjectPtr<UCurveTable> DamageCalculationCoefficients;
 
+	/**
+	 * Finds the default info for the given specified CharacterClass in the DataAsset containing info for All Character Classes.
+	 * FCharacterClassDefaultInfo contains the attributes and abilities for that CharacterClass.
+	 * @param CharacterClass CharacterClass to find the default info for
+	 * @return The default info for the given CharacterClass
+	 */
 	FCharacterClassDefaultInfo GetCharacterClassDefaultInfo(ECharacterClass CharacterClass);
 };
