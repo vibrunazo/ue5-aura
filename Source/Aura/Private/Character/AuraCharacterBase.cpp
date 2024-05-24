@@ -162,6 +162,7 @@ void AAuraCharacterBase::AddCharacterAbilities() const
 	}
 
 	AuraASC->AddCharacterAbilities(StartupAbilities);
+	AuraASC->AddCharacterPassiveAbilities(StartupPassiveAbilities);
 }
 
 void AAuraCharacterBase::Dissolve()

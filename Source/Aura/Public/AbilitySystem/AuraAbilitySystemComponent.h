@@ -41,6 +41,12 @@ public:
 	 * @param StartupAbilities The list of abilities to add
 	 */
 	void AddCharacterAbilities(const TArray<TSubclassOf<UAuraGameplayAbility>>& StartupAbilities);
+	/**
+	 * Adds the given Passive Abilities array to the Character's Ability System. Used only by Aura. Called only on Server
+	 * for Startup Passive Abilities.
+	 * @param StartupPassiveAbilities The list of abilities to add
+	 */
+	void AddCharacterPassiveAbilities(const TArray<TSubclassOf<UGameplayAbility>>& StartupPassiveAbilities);
 	// Set after all startup abilities were given to controlled Pawn, just before the AbilitiesGivenDelegate is broadcast.
 	// Used by the Widget Controller to determine whether it bound to the AbilitiesGivenDelegate too late
 	// and need to manually check for abilities.

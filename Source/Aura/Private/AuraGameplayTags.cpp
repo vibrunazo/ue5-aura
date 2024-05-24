@@ -33,6 +33,8 @@ namespace AuraTags
 	UE_DEFINE_GAMEPLAY_TAG_COMMENT(Attributes_Resistance_Frost, "Attributes.Resistance.Frost", "Resistance to Frost Damage");
 	UE_DEFINE_GAMEPLAY_TAG_COMMENT(Attributes_Resistance_Lightning, "Attributes.Resistance.Lightning", "Resistance to Lightning Damage");
 	UE_DEFINE_GAMEPLAY_TAG_COMMENT(Attributes_Resistance_Physical, "Attributes.Resistance.Physical", "Resistance to Physical Damage");
+	
+	UE_DEFINE_GAMEPLAY_TAG_COMMENT(Attributes_Meta_IncomingXP, "Attributes.Meta.IncomingXP", "Used as the SetByCaller Tag when an Effect needs to modify IncomingXP. So the Effect can add XP to the Player.");
 
 	UE_DEFINE_GAMEPLAY_TAG_COMMENT(InputTag_LMB, "InputTag.LMB", "Left Mouse Button");
 	UE_DEFINE_GAMEPLAY_TAG_COMMENT(InputTag_RMB, "InputTag.RMB", "Right Mouse Button");

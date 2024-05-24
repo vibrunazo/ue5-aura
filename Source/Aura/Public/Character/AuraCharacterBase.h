@@ -144,6 +144,11 @@ private:
 	UPROPERTY(EditAnywhere, Category = "Abilities")
 	TArray<TSubclassOf<UAuraGameplayAbility>> StartupAbilities;
 
+	/** Passive Abilities that are added to the ASC at Startup
+	 * Used only by Aura, Enemies use CharacterClass DataAsset instead */
+	UPROPERTY(EditAnywhere, Category = "Abilities")
+	TArray<TSubclassOf<UGameplayAbility>> StartupPassiveAbilities;
+
 	UPROPERTY(EditAnywhere, Category = "Combat")
 	TObjectPtr<UAnimMontage> HitReactMontage;
 };
