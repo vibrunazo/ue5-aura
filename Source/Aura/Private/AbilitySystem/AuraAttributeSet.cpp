@@ -143,6 +143,7 @@ void UAuraAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallba
 			const bool bFatalDamage = NewHealth <= 0.f;
 			if (bFatalDamage)
 			{
+				SendXPEvent(Props);
 				if (ICombatInterface* CombatInterface = Cast<ICombatInterface>(Props.TargetAvatarActor))
 				{
 					CombatInterface->Die();
@@ -165,9 +166,7 @@ void UAuraAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallba
 	if (Data.EvaluatedData.Attribute == GetIncomingXPAttribute())
 	{
 		const float LocalIncomingXP = GetIncomingXP();
-		SetIncomingXP(0.f);
-		UE_LOG(LogAura, Log, TEXT("Incoming XP Changed on %s to %f"), *Props.TargetAvatarActor->GetName(), LocalIncomingXP);
-		 
+		SetIncomingXP(0.f); // resets the temporary meta attribute
 	}
 }
 
@@ -186,6 +185,23 @@ void UAuraAttributeSet::ShowFloatingText(const FEffectProperties& Props, const f
 		{
 			PC->ShowDamageNumber(LocalIncomingDamage, Props.TargetCharacter, bBlockedHit, bCriticalHit);
 		}
+	}
+}
+
+void UAuraAttributeSet::SendXPEvent(const FEffectProperties& Props)
+{
+	if (ICombatInterface* CombatInterface = Cast<ICombatInterface>(Props.TargetAvatarActor))
+	{
+		const int32 TargetLevel = CombatInterface->GetPlayerLevel();
+		const ECharacterClass TargetClass = ICombatInterface::Execute_GetCharacterClass(Props.TargetCharacter);
+		const int32 XPReward = UAuraAbilitySystemLibrary::GetXPRewarded(Props.TargetCharacter, TargetClass, TargetLevel);
+
+		FGameplayEventData Payload = FGameplayEventData();
+		Payload.Instigator = Props.SourceCharacter;
+		Payload.Target = Props.TargetCharacter;
+		Payload.EventTag = AuraTags::Attributes_Meta_IncomingXP;
+		Payload.EventMagnitude = XPReward;
+		UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(Props.SourceCharacter, AuraTags::Attributes_Meta_IncomingXP, Payload);
 	}
 }
 
