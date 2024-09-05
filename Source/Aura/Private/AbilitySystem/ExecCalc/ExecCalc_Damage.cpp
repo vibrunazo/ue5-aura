@@ -85,9 +85,18 @@ void UExecCalc_Damage::Execute_Implementation(const FGameplayEffectCustomExecuti
 
 	AActor* SourceAvatar = SourceASC ? SourceASC->GetAvatarActor() : nullptr;
 	AActor* TargetAvatar = TargetASC ? TargetASC->GetAvatarActor() : nullptr;
-	ICombatInterface* SourceCombatInterface = Cast<ICombatInterface>(SourceAvatar);
-	ICombatInterface* TargetCombatInterface = Cast<ICombatInterface>(TargetAvatar);
 
+	int32 SourcePlayerLevel = 1;
+	if (SourceAvatar->Implements<UCombatInterface>())
+	{
+		SourcePlayerLevel = ICombatInterface::Execute_GetPlayerLevel(SourceAvatar);
+	}
+	int32 TargetPlayerLevel = 1;
+	if (TargetAvatar->Implements<UCombatInterface>())
+	{
+		TargetPlayerLevel = ICombatInterface::Execute_GetPlayerLevel(TargetAvatar);
+	}
+	
 	const FGameplayEffectSpec& Spec = ExecutionParams.GetOwningSpec();
 	const FGameplayTagContainer* SourceTags = Spec.CapturedSourceTags.GetAggregatedTags();
 	const FGameplayTagContainer* TargetTags = Spec.CapturedTargetTags.GetAggregatedTags();
@@ -99,13 +108,13 @@ void UExecCalc_Damage::Execute_Implementation(const FGameplayEffectCustomExecuti
 	const UCharacterClassInfo* CharacterClassInfo = UAuraAbilitySystemLibrary::GetCharacterClassInfo(SourceAvatar);
 	const FRealCurve* ArmorPenetrationBonusCurve = CharacterClassInfo->DamageCalculationCoefficients->FindCurve(FName("ArmorPenetrationBonus"), FString());
 	// Gets the Bonus Armor Penetration the attacker gets for being higher level than the defender.
-	const float SourceArmorPenetrationLevelBonus = ArmorPenetrationBonusCurve->Eval(SourceCombatInterface->GetPlayerLevel() - TargetCombatInterface->GetPlayerLevel());
+	const float SourceArmorPenetrationLevelBonus = ArmorPenetrationBonusCurve->Eval(SourcePlayerLevel - TargetPlayerLevel);
 	const FRealCurve* ArmorBonusCurve = CharacterClassInfo->DamageCalculationCoefficients->FindCurve(FName("ArmorBonus"), FString());
 	// Gets the Armor bonus the defender gets from being higher level than the attacker.
-	const float TargetArmorLevelBonus = ArmorBonusCurve->Eval(TargetCombatInterface->GetPlayerLevel() - SourceCombatInterface->GetPlayerLevel());
+	const float TargetArmorLevelBonus = ArmorBonusCurve->Eval(TargetPlayerLevel - SourcePlayerLevel);
 	const FRealCurve* CriticalChanceCurve = CharacterClassInfo->DamageCalculationCoefficients->FindCurve(FName("CriticalChanceResistance"), FString());
 	// Gets the coefficient multiplied by critical chance depending on defender level. Higher level targets are harder to crit against.
-	const float CriticalChanceLevelCoefficient = CriticalChanceCurve->Eval(TargetCombatInterface->GetPlayerLevel());
+	const float CriticalChanceLevelCoefficient = CriticalChanceCurve->Eval(TargetPlayerLevel);
 
 	float SourceArmorPenetration = 0.f;
 	ExecutionParams.AttemptCalculateCapturedAttributeMagnitude(GetDamageStatics().ArmorPenetrationDef, EvaluationParameters, SourceArmorPenetration);
