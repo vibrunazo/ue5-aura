@@ -42,6 +42,8 @@ public:
 	void SetXP(int32 NewXP);
 	UFUNCTION(BlueprintCallable, Category = "Experience")
 	void AddXP(int32 Amount);
+	UFUNCTION(BlueprintCallable, Category = "Experience")
+	void LevelUp();
 
 	FOnStatChanged OnXPChanged;
 	

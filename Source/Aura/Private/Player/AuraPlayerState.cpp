@@ -5,6 +5,7 @@
 
 #include "AbilitySystem/AuraAbilitySystemComponent.h"
 #include "AbilitySystem/AuraAttributeSet.h"
+#include "AbilitySystem/Data/LevelUpInfo.h"
 #include "Net/UnrealNetwork.h"
 
 AAuraPlayerState::AAuraPlayerState()
@@ -51,8 +52,34 @@ void AAuraPlayerState::SetXP(int32 NewXP)
 
 void AAuraPlayerState::AddXP(int32 Amount)
 {
+	const int32 CurrentLevel = PlayerLevel;
+	const int32 CurrentXP = XP;
+	const int32 NewLevel = LevelUpInfo->FindLevelForXP(XP + Amount);
+	int32 NumLevelUps = NewLevel - CurrentLevel;
 	XP += Amount;
+
+	while (NumLevelUps > 0)
+	{
+		LevelUp();
+		NumLevelUps--;
+	}
 	OnXPChanged.Broadcast(XP);
+}
+
+void AAuraPlayerState::LevelUp()
+{
+	FSingleLevelInfo Rewards = LevelUpInfo->AllLevelsInfo[PlayerLevel];
+	int32 AttributePointsReward = Rewards.AttributePointReward;
+	int32 SpellPointsReward = Rewards.SpellPointReward;
+	// PlayerLevel++;
+	AddPlayerLevel(1);
+	// Add to AttributePoints and SpellPoints
+	UAuraAttributeSet* AuraAttributes = Cast<UAuraAttributeSet>(AttributeSet);
+	if (!AuraAttributes) return;
+	AuraAttributes->SetHealth(AuraAttributes->GetMaxHealth());
+	AuraAttributes->SetMana(AuraAttributes->GetMaxMana());
+
+	// OnPlayerLevelChanged.Broadcast(PlayerLevel);
 }
 
 void AAuraPlayerState::OnRep_PlayerLevel(int32 OldLevel)
