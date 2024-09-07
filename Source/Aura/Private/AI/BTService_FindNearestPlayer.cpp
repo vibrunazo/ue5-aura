@@ -31,6 +31,7 @@ void UBTService_FindNearestPlayer::TickNode(UBehaviorTreeComponent& OwnerComp, u
 			BestActor = Actor;
 		}
 	}
+	// if (BestDistance > 1000.f) BestActor = nullptr;
 	UBTFunctionLibrary::SetBlackboardValueAsObject(this, TargetToFollowSelector, BestActor);
 	UBTFunctionLibrary::SetBlackboardValueAsFloat(this, DistanceToTargetSelector, BestDistance);
 }

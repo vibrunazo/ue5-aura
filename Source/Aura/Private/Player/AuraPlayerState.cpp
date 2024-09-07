@@ -6,6 +6,7 @@
 #include "AbilitySystem/AuraAbilitySystemComponent.h"
 #include "AbilitySystem/AuraAttributeSet.h"
 #include "AbilitySystem/Data/LevelUpInfo.h"
+#include "Character/AuraCharacter.h"
 #include "Net/UnrealNetwork.h"
 
 AAuraPlayerState::AAuraPlayerState()
@@ -78,6 +79,12 @@ void AAuraPlayerState::LevelUp()
 	if (!AuraAttributes) return;
 	AuraAttributes->SetHealth(AuraAttributes->GetMaxHealth());
 	AuraAttributes->SetMana(AuraAttributes->GetMaxMana());
+	if (!AbilitySystemComponent) return;
+	AActor* AuraCharacter = AbilitySystemComponent->GetAvatarActor();
+	if (!AuraCharacter) return;
+	if (!AuraCharacter->Implements<UPlayerInterface>()) return;;
+	IPlayerInterface::Execute_LevelUp(AuraCharacter);
+	
 
 	// OnPlayerLevelChanged.Broadcast(PlayerLevel);
 }
