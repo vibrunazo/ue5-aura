@@ -26,6 +26,8 @@ void AAuraPlayerState::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& Out
 
 	DOREPLIFETIME(AAuraPlayerState, PlayerLevel);
 	DOREPLIFETIME(AAuraPlayerState, XP);
+	DOREPLIFETIME(AAuraPlayerState, AttributePoints);
+	DOREPLIFETIME(AAuraPlayerState, SpellPoints);
 }
 
 UAbilitySystemComponent* AAuraPlayerState::GetAbilitySystemComponent() const
@@ -67,6 +69,18 @@ void AAuraPlayerState::AddXP(int32 Amount)
 	OnXPChanged.Broadcast(XP);
 }
 
+void AAuraPlayerState::AddAttributePoints(int32 Amount)
+{
+	AttributePoints += Amount;
+	OnAPChanged.Broadcast(AttributePoints);
+}
+
+void AAuraPlayerState::AddSpellPoints(int32 Amount)
+{
+	SpellPoints += Amount;
+	OnSPChanged.Broadcast(SpellPoints);
+}
+
 void AAuraPlayerState::LevelUp()
 {
 	FSingleLevelInfo Rewards = LevelUpInfo->AllLevelsInfo[PlayerLevel];
@@ -98,4 +112,14 @@ void AAuraPlayerState::OnRep_XP(int32 OldXP)
 {
 	OnXPChanged.Broadcast(XP);
 	
+}
+
+void AAuraPlayerState::OnRep_AttributePoints(int32 OldAttributePoints)
+{
+	OnAPChanged.Broadcast(AttributePoints);
+}
+
+void AAuraPlayerState::OnRep_SpellPoints(int32 OldAttributePoints)
+{
+	OnSPChanged.Broadcast(SpellPoints);
 }

@@ -9,6 +9,8 @@
 class UAttributeSet;
 class UAbilitySystemComponent;
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnStatChangedSignature, int32, NewValue);
+
 USTRUCT(BlueprintType)
 struct FWidgetControllerParams
 {

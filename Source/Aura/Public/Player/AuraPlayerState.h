@@ -27,13 +27,16 @@ public:
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
 	UAttributeSet* GetAttributeSet() const { return  AttributeSet; }
+
+	
 	UFUNCTION(BlueprintCallable, Category = "Player Level")
 	FORCEINLINE int32 GetPlayerLevel() const { return PlayerLevel; }
 	UFUNCTION(BlueprintCallable, Category = "Player Level")
 	void SetPlayerLevel(int32 NewLevel);
 	UFUNCTION(BlueprintCallable, Category = "Player Level")
 	void AddPlayerLevel(int32 Amount);
-	
+	UFUNCTION(BlueprintCallable, Category = "Player Level")
+	void LevelUp();
 	FOnStatChanged OnPlayerLevelChanged;
 	
 	UFUNCTION(BlueprintCallable, Category = "Experience")
@@ -42,10 +45,21 @@ public:
 	void SetXP(int32 NewXP);
 	UFUNCTION(BlueprintCallable, Category = "Experience")
 	void AddXP(int32 Amount);
-	UFUNCTION(BlueprintCallable, Category = "Experience")
-	void LevelUp();
-
 	FOnStatChanged OnXPChanged;
+	
+	UFUNCTION(BlueprintCallable, Category = "Attribute Points")
+	FORCEINLINE int32 GetAttributePoints() const { return AttributePoints; }
+	UFUNCTION(BlueprintCallable, Category = "Attribute Points")
+	void AddAttributePoints(int32 Amount);
+	FOnStatChanged OnAttributePointsChanged;
+	FOnStatChanged OnAPChanged;
+	
+	UFUNCTION(BlueprintCallable, Category = "Spell Points")
+	FORCEINLINE int32 GetSpellPoints() const { return SpellPoints; }
+	UFUNCTION(BlueprintCallable, Category = "Spell Points")
+	void AddSpellPoints(int32 Amount);
+	FOnStatChanged OnSpellPointsChanged;
+	FOnStatChanged OnSPChanged;
 	
 	/** Data Asset containing info about each Level Up. */
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Level Data")
@@ -61,16 +75,22 @@ protected:
 
 	UPROPERTY(EditAnywhere, ReplicatedUsing=OnRep_PlayerLevel)
 	int32 PlayerLevel = 1;
-
 	UFUNCTION()
 	void OnRep_PlayerLevel(int32 OldLevel);
 
-	// The current experience points of the player, replicated with notification
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, ReplicatedUsing = OnRep_XP)
 	int32 XP;
-
-	// RepNotify function for XP
 	UFUNCTION()
 	void OnRep_XP(int32 OldXP);
+	
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, ReplicatedUsing = OnRep_SpellPoints)
+	int32 SpellPoints = 0;
+	UFUNCTION()
+	void OnRep_AttributePoints(int32 OldAttributePoints);
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, ReplicatedUsing = OnRep_AttributePoints)
+	int32 AttributePoints = 0;
+	UFUNCTION()
+	void OnRep_SpellPoints(int32 OldAttributePoints);
 
 };
