@@ -72,13 +72,13 @@ void AAuraPlayerState::AddXP(int32 Amount)
 void AAuraPlayerState::AddAttributePoints(int32 Amount)
 {
 	AttributePoints += Amount;
-	OnAPChanged.Broadcast(AttributePoints);
+	OnAttributePointsChanged.Broadcast(AttributePoints);
 }
 
 void AAuraPlayerState::AddSpellPoints(int32 Amount)
 {
 	SpellPoints += Amount;
-	OnSPChanged.Broadcast(SpellPoints);
+	OnSpellPointsChanged.Broadcast(SpellPoints);
 }
 
 void AAuraPlayerState::LevelUp()
@@ -89,6 +89,11 @@ void AAuraPlayerState::LevelUp()
 	// PlayerLevel++;
 	AddPlayerLevel(1);
 	// Add to AttributePoints and SpellPoints
+	int32 APReward = LevelUpInfo->AllLevelsInfo[PlayerLevel].AttributePointReward;
+	AddAttributePoints(APReward);
+	int32 SPReward = LevelUpInfo->AllLevelsInfo[PlayerLevel].SpellPointReward;
+	AddSpellPoints(SPReward);
+	
 	UAuraAttributeSet* AuraAttributes = Cast<UAuraAttributeSet>(AttributeSet);
 	if (!AuraAttributes) return;
 	AuraAttributes->SetHealth(AuraAttributes->GetMaxHealth());
@@ -116,10 +121,10 @@ void AAuraPlayerState::OnRep_XP(int32 OldXP)
 
 void AAuraPlayerState::OnRep_AttributePoints(int32 OldAttributePoints)
 {
-	OnAPChanged.Broadcast(AttributePoints);
+	OnAttributePointsChanged.Broadcast(AttributePoints);
 }
 
 void AAuraPlayerState::OnRep_SpellPoints(int32 OldAttributePoints)
 {
-	OnSPChanged.Broadcast(SpellPoints);
+	OnSpellPointsChanged.Broadcast(SpellPoints);
 }

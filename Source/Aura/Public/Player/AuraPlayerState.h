@@ -52,14 +52,12 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Attribute Points")
 	void AddAttributePoints(int32 Amount);
 	FOnStatChanged OnAttributePointsChanged;
-	FOnStatChanged OnAPChanged;
 	
 	UFUNCTION(BlueprintCallable, Category = "Spell Points")
 	FORCEINLINE int32 GetSpellPoints() const { return SpellPoints; }
 	UFUNCTION(BlueprintCallable, Category = "Spell Points")
 	void AddSpellPoints(int32 Amount);
 	FOnStatChanged OnSpellPointsChanged;
-	FOnStatChanged OnSPChanged;
 	
 	/** Data Asset containing info about each Level Up. */
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Level Data")
