@@ -105,6 +105,27 @@ void AAuraCharacter::LevelUp_Implementation()
 	MulticastLevelUpParticles();
 }
 
+int32 AAuraCharacter::GetAttributePoints_Implementation()
+{
+	AAuraPlayerState* AuraPlayerState = Cast<AAuraPlayerState>(GetPlayerState());
+	if (!AuraPlayerState) return 0;
+	return AuraPlayerState->GetAttributePoints();
+}
+
+void AAuraCharacter::AddToAttributePoints_Implementation(int32 Amount)
+{
+	AAuraPlayerState* AuraPlayerState = Cast<AAuraPlayerState>(GetPlayerState());
+	if (!AuraPlayerState) return;
+	AuraPlayerState->AddAttributePoints(Amount);
+}
+
+int32 AAuraCharacter::GetSpellPoints_Implementation()
+{
+	AAuraPlayerState* AuraPlayerState = Cast<AAuraPlayerState>(GetPlayerState());
+	if (!AuraPlayerState) return 0;
+	return AuraPlayerState->GetSpellPoints();
+}
+
 void AAuraCharacter::MulticastLevelUpParticles_Implementation() const
 {
 	if (IsValid(LevelUpNiagaraComponent))

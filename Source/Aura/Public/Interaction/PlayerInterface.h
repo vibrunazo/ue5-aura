@@ -33,5 +33,14 @@ public:
 
 	UFUNCTION(BlueprintNativeEvent)
 	void LevelUp();
+
+	UFUNCTION(BlueprintNativeEvent)
+	int32 GetAttributePoints();
+
+	UFUNCTION(BlueprintNativeEvent)
+	void AddToAttributePoints(int32 Amount);
+
+	UFUNCTION(BlueprintNativeEvent)
+	int32 GetSpellPoints();
 	
 };

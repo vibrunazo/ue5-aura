@@ -76,6 +76,11 @@ public:
 	 */
 	static FGameplayTag GetInputTagFromSpec(const FGameplayAbilitySpec& Spec);
 
+	void UpgradeAttribute(const FGameplayTag& AttributeTag);
+
+	UFUNCTION(Server, Reliable)
+	void ServerUpgradeAttribute(const FGameplayTag& AttributeTag);
+
 protected:
 	virtual void OnRep_ActivateAbilities() override;
 	UFUNCTION(Client, Reliable)
