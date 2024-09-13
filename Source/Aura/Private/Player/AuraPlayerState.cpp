@@ -96,8 +96,7 @@ void AAuraPlayerState::LevelUp()
 	
 	UAuraAttributeSet* AuraAttributes = Cast<UAuraAttributeSet>(AttributeSet);
 	if (!AuraAttributes) return;
-	AuraAttributes->SetHealth(AuraAttributes->GetMaxHealth());
-	AuraAttributes->SetMana(AuraAttributes->GetMaxMana());
+	AuraAttributes->TopHealthAndMana();
 	if (!AbilitySystemComponent) return;
 	AActor* AuraCharacter = AbilitySystemComponent->GetAvatarActor();
 	if (!AuraCharacter) return;
