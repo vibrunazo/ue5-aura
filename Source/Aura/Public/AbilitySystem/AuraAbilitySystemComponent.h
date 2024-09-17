@@ -9,7 +9,7 @@
 class UAuraAbilitySystemComponent;
 class UAuraGameplayAbility;
 DECLARE_MULTICAST_DELEGATE_OneParam(FEffectAssetTags, const FGameplayTagContainer& /* AssetTags */);
-DECLARE_MULTICAST_DELEGATE_OneParam(FAbilitiesGiven, UAuraAbilitySystemComponent*);
+DECLARE_MULTICAST_DELEGATE(FAbilitiesGiven);
 DECLARE_DELEGATE_OneParam(FForEachAbility, const FGameplayAbilitySpec&);
 
 
@@ -68,7 +68,7 @@ public:
 	 */
 	static FGameplayTag GetAbilityTagFromSpec(const FGameplayAbilitySpec& Spec);
 	/**
-	 * Returns the first Tag starting with "InputTag" in the spec's Dynamic tags container.
+	 * Returns the first Tag starting with "InputTag" in the spec's Dynamic tags' container.
 	 * for example: "InputTag.LMB".
 	 * This is the tag that should be used to bind input to abilities.
 	 * @param Spec The ability spec
