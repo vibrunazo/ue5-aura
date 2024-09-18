@@ -7,6 +7,9 @@
 #include "Kismet/BlueprintFunctionLibrary.h"
 #include "AuraAbilitySystemLibrary.generated.h"
 
+class AAuraHUD;
+struct FWidgetControllerParams;
+class USpellMenuWidgetController;
 struct FGameplayEffectContextHandle;
 class UAbilitySystemComponent;
 class UAttributeMenuWidgetController;
@@ -21,10 +24,16 @@ class AURA_API UAuraAbilitySystemLibrary : public UBlueprintFunctionLibrary
 
 public:
 	UFUNCTION(BlueprintPure, Category = "AuraAbilitySystemLibrary|WidgetController", meta = (WorldContext="WorldContextObject"))
+	static bool MakeWidgetControllerParams(const UObject* WorldContextObject, FWidgetControllerParams& OutWidgetControllerParams, AAuraHUD*& OutAuraHUD);
+	
+	UFUNCTION(BlueprintPure, Category = "AuraAbilitySystemLibrary|WidgetController", meta = (WorldContext="WorldContextObject"))
 	static UOverlayWidgetController* GetOverlayWidgetController(const UObject* WorldContextObject);
 
 	UFUNCTION(BlueprintPure, Category = "AuraAbilitySystemLibrary|WidgetController", meta = (WorldContext="WorldContextObject"))
 	static UAttributeMenuWidgetController* GetAttributeMenuWidgetController(const UObject* WorldContextObject);
+
+	UFUNCTION(BlueprintPure, Category = "AuraAbilitySystemLibrary|WidgetController", meta = (WorldContext="WorldContextObject"))
+	static USpellMenuWidgetController* GetSpellMenuWidgetController(const UObject* WorldContextObject);
 	/**
 	 * Applies a GameplayEffect to a given Target AbilitySystemComponent. Will create the Spec and Handle from the Class
 	 * then apply it using a default empty EffectContext.

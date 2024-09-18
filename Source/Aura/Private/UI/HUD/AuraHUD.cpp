@@ -3,9 +3,54 @@
 
 #include "UI/HUD/AuraHUD.h"
 
+#include "Player/AuraPlayerState.h"
 #include "UI/Widget/AuraUserWidget.h"
 #include "UI/WidgetController/AttributeMenuWidgetController.h"
 #include "UI/WidgetController/OverlayWidgetController.h"
+#include "UI/WidgetController/SpellMenuWidgetController.h"
+
+FWidgetControllerParams AAuraHUD::MakeWCParams()
+{
+	APlayerController* PC = GetOwningPlayerController();
+	if (!PC) return FWidgetControllerParams();
+	AAuraPlayerState* PS = PC->GetPlayerState<AAuraPlayerState>();
+	UAbilitySystemComponent* ASC = PS->GetAbilitySystemComponent();
+	UAttributeSet *AS = PS->GetAttributeSet();
+	return FWidgetControllerParams(PC, PS, ASC, AS);
+}
+
+UOverlayWidgetController* AAuraHUD::GetOverlayWidgetController()
+{
+	if (OverlayWidgetController == nullptr)
+	{
+		OverlayWidgetController = NewObject<UOverlayWidgetController>(this, OverlayWidgetControllerClass);
+		OverlayWidgetController->SetWidgetControllerParams(MakeWCParams());
+		OverlayWidgetController->BindCallbacksToDependencies();
+	}
+	return OverlayWidgetController;
+}
+
+UAttributeMenuWidgetController* AAuraHUD::GetAttributeMenuWidgetController()
+{
+	if (AttributeMenuWidgetController == nullptr)
+	{
+		AttributeMenuWidgetController = NewObject<UAttributeMenuWidgetController>(this, AttributeMenuWidgetControllerClass);
+		AttributeMenuWidgetController->SetWidgetControllerParams(MakeWCParams());
+		AttributeMenuWidgetController->BindCallbacksToDependencies();
+	}
+	return AttributeMenuWidgetController;
+}
+
+USpellMenuWidgetController* AAuraHUD::GetSpellMenuWidgetController()
+{
+	if (SpellMenuWidgetController == nullptr)
+	{
+		SpellMenuWidgetController = NewObject<USpellMenuWidgetController>(this, USpellMenuWidgetControllerClass);
+		SpellMenuWidgetController->SetWidgetControllerParams(MakeWCParams());
+		SpellMenuWidgetController->BindCallbacksToDependencies();
+	}
+	return SpellMenuWidgetController;
+}
 
 /**
  * Returns overlay widget controller. If it does not exist, it will be created using widget controller params.
@@ -33,6 +78,17 @@ UAttributeMenuWidgetController* AAuraHUD::GetAttributeMenuWidgetController(const
 		AttributeMenuWidgetController->BindCallbacksToDependencies();
 	}
 	return AttributeMenuWidgetController;
+}
+
+USpellMenuWidgetController* AAuraHUD::GetSpellMenuWidgetController(const FWidgetControllerParams& WCParams)
+{
+    if (SpellMenuWidgetController == nullptr)
+    {
+    	SpellMenuWidgetController = NewObject<USpellMenuWidgetController>(this, USpellMenuWidgetControllerClass);
+    	SpellMenuWidgetController->SetWidgetControllerParams(WCParams);
+    	SpellMenuWidgetController->BindCallbacksToDependencies();
+    }
+	return SpellMenuWidgetController;
 }
 
 void AAuraHUD::InitOverlay(APlayerController* PC, APlayerState* PS, UAbilitySystemComponent* ASC, UAttributeSet* AS)
