@@ -76,6 +76,14 @@ public:
 	 */
 	static FGameplayTag GetInputTagFromSpec(const FGameplayAbilitySpec& Spec);
 
+	/**
+	 * Returns the first Tag starting with "Abilities.Status" in the spec's ability tags container.
+	 * for example: "Abilities.Status.Equipped".
+	 * @param Spec The ability spec
+	 * @return The associated status tag
+	 */
+	static FGameplayTag GetStatusFromSpec(const FGameplayAbilitySpec& Spec);
+
 	void UpgradeAttribute(const FGameplayTag& AttributeTag);
 
 	UFUNCTION(Server, Reliable)

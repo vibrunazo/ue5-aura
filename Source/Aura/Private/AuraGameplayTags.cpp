@@ -54,7 +54,18 @@ namespace AuraTags
 
 	UE_DEFINE_GAMEPLAY_TAG_COMMENT(Abilities_Attack, "Abilities.Attack", "An attack ability. Set on Abilities' defaults as their Ability Tag. Used to activate abilities by tag.");
 	UE_DEFINE_GAMEPLAY_TAG_COMMENT(Abilities_Summon, "Abilities.Summon", "A summon ability. Set on Abilities' defaults as their Ability Tag. Used to activate abilities by tag.");
-	UE_DEFINE_GAMEPLAY_TAG_COMMENT(Abilities_Fire_FireBolt, "Abilities.Fire.FireBolt", "Used to index Abilities in the AbilitiInfo DataAsset. Which is used to get UI meta data for each Ability");
+	UE_DEFINE_GAMEPLAY_TAG_COMMENT(Abilities_HitReact, "Abilities.HitReact", "Activated when reacting to getting hit. Set on Abilities' defaults as their Ability Tag. Used to activate abilities by tag.");
+	UE_DEFINE_GAMEPLAY_TAG_COMMENT(Abilities_Fire_FireBolt, "Abilities.Fire.FireBolt", "Used to index Abilities in the AbilityInfo DataAsset. Which is used to get UI meta data for each Ability");
+
+	UE_DEFINE_GAMEPLAY_TAG_COMMENT(Abilities_Status_Locked, "Abilities.Status.Locked", "This ability is locked and cannot be unlocked because the player does not meet its requirements.");
+	UE_DEFINE_GAMEPLAY_TAG_COMMENT(Abilities_Status_Eligible, "Abilities.Status.Eligible", "This ability can be unlocked because the player meet its requirements.");
+	UE_DEFINE_GAMEPLAY_TAG_COMMENT(Abilities_Status_Unlocked, "Abilities.Status.Unlocked", "This ability has been unlocked and can be equipped.");
+	UE_DEFINE_GAMEPLAY_TAG_COMMENT(Abilities_Status_Equipped, "Abilities.Status.Equipped", "This ability has been equipped and can be activated.");
+	
+	UE_DEFINE_GAMEPLAY_TAG_COMMENT(Abilities_Type_Offensive, "Abilities.Type.Offensive", "An offensive ability that is activated with an input.");
+	UE_DEFINE_GAMEPLAY_TAG_COMMENT(Abilities_Type_Passive, "Abilities.Type.Passive", "A passive ability that is always active.");
+	UE_DEFINE_GAMEPLAY_TAG_COMMENT(Abilities_Type_None, "Abilities.Type.None", "Neither offensive nor passive ability. Does not show in the UI.");
+	
 
 	UE_DEFINE_GAMEPLAY_TAG_COMMENT(Cooldown_Fire_FireBolt, "Cooldown.Fire.FireBolt", "While the ASC has this TAG, this ability cannot be used. Used by Cooldown gameplay effects.");
 
