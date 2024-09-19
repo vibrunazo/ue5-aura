@@ -11,6 +11,7 @@ class UAuraGameplayAbility;
 DECLARE_MULTICAST_DELEGATE_OneParam(FEffectAssetTags, const FGameplayTagContainer& /* AssetTags */);
 DECLARE_MULTICAST_DELEGATE(FAbilitiesGiven);
 DECLARE_DELEGATE_OneParam(FForEachAbility, const FGameplayAbilitySpec&);
+DECLARE_MULTICAST_DELEGATE_TwoParams(FAbilityStatusChanged, const FGameplayTag& /* AbilityTag */, const FGameplayTag& /* StatusTag */);
 
 
 /**
@@ -34,6 +35,7 @@ public:
 	 * @param UAuraAbilitySystemComponent* The ASC that has given all abilities
 	 */
 	FAbilitiesGiven AbilitiesGivenDelegate;
+	FAbilityStatusChanged AbilityStatusChanged;
 
 	/**
 	 * Adds the given Abilities array to the Character's Ability System. Used only by Aura. Called only on Server for
@@ -91,12 +93,20 @@ public:
 	UFUNCTION(Server, Reliable)
 	void ServerUpgradeAttribute(const FGameplayTag& AttributeTag);
 
+	/**Updates the Status of all abilities in the global AbilityInfo array from the default (locked) to eligible if the
+	 *player meets its level requirements. Called after leveling up.
+	 * 
+	 * @param Level New Level after just leveling up
+	 */
 	void UpdateAbilityStatuses(int32 Level);
 
 protected:
 	virtual void OnRep_ActivateAbilities() override;
 	UFUNCTION(Client, Reliable)
 	void ClientEffectApplied(UAbilitySystemComponent* AbilitySystemComponent, const FGameplayEffectSpec& EffectSpec, FActiveGameplayEffectHandle ActiveEffectHandle);
+
+	UFUNCTION(Client, Reliable)
+	void ClientUpdateAbilityStatus(const FGameplayTag& AbilityTag, const FGameplayTag& StatusTag);
 
 	
 	

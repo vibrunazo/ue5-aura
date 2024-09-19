@@ -83,9 +83,6 @@ void AAuraPlayerState::AddSpellPoints(int32 Amount)
 
 void AAuraPlayerState::LevelUp()
 {
-	FSingleLevelInfo Rewards = LevelUpInfo->AllLevelsInfo[PlayerLevel];
-	int32 AttributePointsReward = Rewards.AttributePointReward;
-	int32 SpellPointsReward = Rewards.SpellPointReward;
 	// PlayerLevel++;
 	AddPlayerLevel(1);
 	// Add to AttributePoints and SpellPoints
@@ -98,6 +95,7 @@ void AAuraPlayerState::LevelUp()
 	if (!AuraAttributes) return;
 	AuraAttributes->TopHealthAndMana();
 	if (!AbilitySystemComponent) return;
+	AbilitySystemComponent->UpdateAbilityStatuses(PlayerLevel);
 	AActor* AuraCharacter = AbilitySystemComponent->GetAvatarActor();
 	if (!AuraCharacter) return;
 	if (!AuraCharacter->Implements<UPlayerInterface>()) return;;
