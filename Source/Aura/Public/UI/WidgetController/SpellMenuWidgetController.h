@@ -17,5 +17,8 @@ class AURA_API USpellMenuWidgetController : public UAuraWidgetController
 public:
 	virtual void BroadcastInitialValues();
 	virtual void BindCallbacksToDependencies();
+
+	UPROPERTY(BlueprintAssignable, Category="WidgetController")
+	FOnStatChangedSignature SpellPointsChanged;
 	
 };

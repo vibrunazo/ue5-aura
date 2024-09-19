@@ -53,7 +53,7 @@ public:
 	virtual void BroadcastInitialValues();
 	virtual void BindCallbacksToDependencies();
 	
-	UPROPERTY(BlueprintAssignable, Category="GAS|Messages")
+	UPROPERTY(BlueprintAssignable, Category="WidgetController")
 	FAbilityInfoSignture AbilityInfoDelegate;
 
 	void BroadcastAbilityInfo();
