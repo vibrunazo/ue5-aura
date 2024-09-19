@@ -55,6 +55,7 @@ namespace AuraTags
 	UE_DECLARE_GAMEPLAY_TAG_EXTERN(Abilities_Summon)
 	UE_DECLARE_GAMEPLAY_TAG_EXTERN(Abilities_HitReact)
 	UE_DECLARE_GAMEPLAY_TAG_EXTERN(Abilities_Fire_FireBolt)
+	UE_DECLARE_GAMEPLAY_TAG_EXTERN(Abilities_Lightning_Electrocute)
 	
 	UE_DECLARE_GAMEPLAY_TAG_EXTERN(Abilities_Status_Locked)
 	UE_DECLARE_GAMEPLAY_TAG_EXTERN(Abilities_Status_Eligible)

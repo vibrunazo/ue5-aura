@@ -7,6 +7,7 @@
 #include "Kismet/BlueprintFunctionLibrary.h"
 #include "AuraAbilitySystemLibrary.generated.h"
 
+class UAbilityInfo;
 class AAuraHUD;
 struct FWidgetControllerParams;
 class USpellMenuWidgetController;
@@ -68,6 +69,16 @@ public:
 	 */
 	UFUNCTION(BlueprintCallable, Category = "AuraAbilitySystemLibrary|CharacterClassDefaults", meta = (WorldContext="WorldContextObject"))
 	static UCharacterClassInfo* GetCharacterClassInfo(const UObject* WorldContextObject);
+	
+	/**
+	 * Returns the AbilityInfo DataAsset, stored in the GameMode. Contains metadata (name, icon, level requirement, etc)
+	 * for all Abilities in the game. Can only be called on the server since the GameMode only exists on the server.
+	 * Will return a nullptr if called on a client.
+	 * @param WorldContextObject Any in-game Object. Required to get the GameMode
+	 * @return The AbilityInfo DataAsset
+	 */
+	UFUNCTION(BlueprintCallable, Category = "AuraAbilitySystemLibrary|AbilityInfo", meta = (WorldContext="WorldContextObject"))
+	static UAbilityInfo* GetAbilityInfo(const UObject* WorldContextObject);
 
 	/**
 	 * Returns the XP rewarded for killing an enemy of the given CharacterClass at the given Level. Since it requires a

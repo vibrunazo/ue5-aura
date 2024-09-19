@@ -112,8 +112,15 @@ UCharacterClassInfo* UAuraAbilitySystemLibrary::GetCharacterClassInfo(const UObj
 	return AuraGameMode->CharacterClassInfo;
 }
 
+UAbilityInfo* UAuraAbilitySystemLibrary::GetAbilityInfo(const UObject* WorldContextObject)
+{
+	const AAuraGameModeBase* AuraGameMode = Cast<AAuraGameModeBase>(UGameplayStatics::GetGameMode(WorldContextObject));
+	if (AuraGameMode == nullptr) return nullptr;
+	return AuraGameMode->AbilityInfo;
+}
+
 int32 UAuraAbilitySystemLibrary::GetXPRewarded(const UObject* WorldContextObject, ECharacterClass CharacterClass,
-	float Level)
+                                               float Level)
 {
 	// Gets the Asset that contains the GameplayEffect class that sets the initial Primary Attributes for all Character Classes
 	UCharacterClassInfo* CharacterClassInfo = GetCharacterClassInfo(WorldContextObject);
