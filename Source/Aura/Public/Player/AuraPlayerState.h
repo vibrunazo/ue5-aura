@@ -82,7 +82,7 @@ protected:
 	void OnRep_XP(int32 OldXP);
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, ReplicatedUsing = OnRep_SpellPoints)
-	int32 SpellPoints = 0;
+	int32 SpellPoints = 2;
 	UFUNCTION()
 	void OnRep_AttributePoints(int32 OldAttributePoints);
 
