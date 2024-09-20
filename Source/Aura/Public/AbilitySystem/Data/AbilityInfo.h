@@ -59,6 +59,7 @@ public:
 	TArray<FAuraAbilityInfo> AbilityInformation;
 
 	/** Returns the FAuraAbilityInfo struct indexed with given AbilityTag. */
+	UFUNCTION(BlueprintCallable)
 	FAuraAbilityInfo FindAbilityInfoForTag(const FGameplayTag& AbilityTag, bool bLogError = false) const;
 	
 };

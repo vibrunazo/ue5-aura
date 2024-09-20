@@ -52,6 +52,7 @@ namespace AuraTags
 	UE_DEFINE_GAMEPLAY_TAG_COMMENT(Damage_Lightning, "Damage.Lightning", "Lightning Damage type");
 	UE_DEFINE_GAMEPLAY_TAG_COMMENT(Damage_Physical, "Damage.Physical", "Physical Damage type");
 
+	UE_DEFINE_GAMEPLAY_TAG_COMMENT(Abilities_None, "Abilities.None", "Used as a null pointer for abilities. Should be the default when an ability doesn't have its ability tag set yet.");
 	UE_DEFINE_GAMEPLAY_TAG_COMMENT(Abilities_Attack, "Abilities.Attack", "An attack ability. Set on Abilities' defaults as their Ability Tag. Used to activate abilities by tag.");
 	UE_DEFINE_GAMEPLAY_TAG_COMMENT(Abilities_Summon, "Abilities.Summon", "A summon ability. Set on Abilities' defaults as their Ability Tag. Used to activate abilities by tag.");
 	UE_DEFINE_GAMEPLAY_TAG_COMMENT(Abilities_HitReact, "Abilities.HitReact", "Activated when reacting to getting hit. Set on Abilities' defaults as their Ability Tag. Used to activate abilities by tag.");

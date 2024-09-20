@@ -86,6 +86,11 @@ public:
 	 */
 	static FGameplayTag GetStatusFromSpec(const FGameplayAbilitySpec& Spec);
 
+	/**Returns the spec of the first ability that matches given tag in the ASC activatable abilities.
+	 * 
+	 * @param AbilityTag The Tag to find an Ability with
+	 * @return The Spec of Ability found
+	 */
 	FGameplayAbilitySpec* GetSpecFromTag(const FGameplayTag& AbilityTag);
 	
 	void UpgradeAttribute(const FGameplayTag& AttributeTag);
@@ -93,8 +98,8 @@ public:
 	UFUNCTION(Server, Reliable)
 	void ServerUpgradeAttribute(const FGameplayTag& AttributeTag);
 
-	/**Updates the Status of all abilities in the global AbilityInfo array from the default (locked) to eligible if the
-	 *player meets its level requirements. Called after leveling up.
+	/**Checks if an ability status should change from locked to eligible because it now meets its level requirements.
+	 *If so, give the ability to the ASC and add the status as a dynamic tag. Called after leveling up.
 	 * 
 	 * @param Level New Level after just leveling up
 	 */

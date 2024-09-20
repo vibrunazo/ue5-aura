@@ -77,7 +77,7 @@ public:
 	 * @param WorldContextObject Any in-game Object. Required to get the GameMode
 	 * @return The AbilityInfo DataAsset
 	 */
-	UFUNCTION(BlueprintCallable, Category = "AuraAbilitySystemLibrary|AbilityInfo", meta = (WorldContext="WorldContextObject"))
+	UFUNCTION(BlueprintCallable, BlueprintPure, Category = "AuraAbilitySystemLibrary|AbilityInfo", meta = (WorldContext="WorldContextObject"))
 	static UAbilityInfo* GetAbilityInfo(const UObject* WorldContextObject);
 
 	/**
