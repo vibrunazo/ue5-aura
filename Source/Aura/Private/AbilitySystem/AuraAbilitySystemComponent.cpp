@@ -189,9 +189,34 @@ void UAuraAbilitySystemComponent::UpdateAbilityStatuses(int32 Level)
             AbilitySpec.DynamicAbilityTags.AddTag(AuraTags::Abilities_Status_Eligible);
 			GiveAbility(AbilitySpec);
 			MarkAbilitySpecDirty(AbilitySpec);
-			ClientUpdateAbilityStatus(Info.AbilityTag, AuraTags::Abilities_Status_Eligible);
+			ClientUpdateAbilityStatus(Info.AbilityTag, AuraTags::Abilities_Status_Eligible, 1);
 		}
 		
+	}
+}
+
+void UAuraAbilitySystemComponent::ServerSpendSpellPoint_Implementation(const FGameplayTag& AbilityTag)
+{
+	// if AbilitySpec is not valid, then the ability is locked so we don't spend spell points
+	if (FGameplayAbilitySpec* AbilitySpec = GetSpecFromTag(AbilityTag))
+	{
+		if (GetAvatarActor()->Implements<UPlayerInterface>())
+		{
+			IPlayerInterface::Execute_AddSpellPoints(GetAvatarActor(), -1);
+		}
+		FGameplayTag Status = GetStatusFromSpec(*AbilitySpec);
+		if (Status.MatchesTagExact(AuraTags::Abilities_Status_Eligible))
+		{
+			AbilitySpec->DynamicAbilityTags.RemoveTag(AuraTags::Abilities_Status_Eligible);
+			AbilitySpec->DynamicAbilityTags.AddTag(AuraTags::Abilities_Status_Unlocked);
+			Status = AuraTags::Abilities_Status_Unlocked;
+		}
+		else if (Status.MatchesTagExact(AuraTags::Abilities_Status_Equipped) || Status.MatchesTagExact(AuraTags::Abilities_Status_Unlocked))
+		{
+			AbilitySpec->Level++;
+		}
+		ClientUpdateAbilityStatus(AbilityTag, Status, AbilitySpec->Level);
+		MarkAbilitySpecDirty(*AbilitySpec);
 	}
 }
 
@@ -207,9 +232,9 @@ void UAuraAbilitySystemComponent::OnRep_ActivateAbilities()
 }
 
 void UAuraAbilitySystemComponent::ClientUpdateAbilityStatus_Implementation(const FGameplayTag& AbilityTag,
-	const FGameplayTag& StatusTag)
+	const FGameplayTag& StatusTag, int32 AbilityLevel)
 {
-	AbilityStatusChanged.Broadcast(AbilityTag, StatusTag);
+	AbilityStatusChanged.Broadcast(AbilityTag, StatusTag, AbilityLevel);
 }
 
 void UAuraAbilitySystemComponent::ClientEffectApplied_Implementation(UAbilitySystemComponent* AbilitySystemComponent,

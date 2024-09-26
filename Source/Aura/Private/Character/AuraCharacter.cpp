@@ -126,6 +126,13 @@ int32 AAuraCharacter::GetSpellPoints_Implementation()
 	return AuraPlayerState->GetSpellPoints();
 }
 
+void AAuraCharacter::AddSpellPoints_Implementation(int32 Amount)
+{
+	AAuraPlayerState* AuraPlayerState = Cast<AAuraPlayerState>(GetPlayerState());
+	if (!AuraPlayerState) return;
+	AuraPlayerState->AddSpellPoints(Amount);
+}
+
 void AAuraCharacter::MulticastLevelUpParticles_Implementation() const
 {
 	if (IsValid(LevelUpNiagaraComponent))

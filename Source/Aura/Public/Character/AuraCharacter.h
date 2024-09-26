@@ -32,6 +32,7 @@ public:
 	virtual int32 GetAttributePoints_Implementation() override;
 	virtual void AddToAttributePoints_Implementation(int32 Amount) override;
 	virtual int32 GetSpellPoints_Implementation() override;
+	virtual void AddSpellPoints_Implementation(int32 Amount) override;
 	/** End of Player Interface */
 	
 	/** Combat Interface */

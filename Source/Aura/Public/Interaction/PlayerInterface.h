@@ -42,5 +42,8 @@ public:
 
 	UFUNCTION(BlueprintNativeEvent)
 	int32 GetSpellPoints();
+
+	UFUNCTION(BlueprintNativeEvent)
+	void AddSpellPoints(int32 Amount);
 	
 };

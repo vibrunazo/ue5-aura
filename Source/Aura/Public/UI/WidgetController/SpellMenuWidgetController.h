@@ -20,5 +20,8 @@ public:
 
 	UPROPERTY(BlueprintAssignable, Category="WidgetController")
 	FOnStatChangedSignature SpellPointsChanged;
+
+	UFUNCTION(BlueprintCallable)
+	void SpendPointsButtonChanged(FGameplayTag AbilityTag);
 	
 };
